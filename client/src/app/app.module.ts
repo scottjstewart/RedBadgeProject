@@ -52,9 +52,10 @@ import {
 } from "@angular/material";
 import { SignupComponent } from './signup/signup.component';
 import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SidebarComponent, SignupComponent, FooterComponent],
+  declarations: [AppComponent, LoginComponent, SidebarComponent, SignupComponent, FooterComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
