@@ -9,7 +9,10 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
-
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http'
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -53,6 +56,7 @@ import {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
