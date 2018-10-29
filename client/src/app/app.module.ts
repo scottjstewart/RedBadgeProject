@@ -47,9 +47,10 @@ import {
   MatButtonModule,
   MatCheckboxModule
 } from "@angular/material";
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SidebarComponent],
+  declarations: [AppComponent, LoginComponent, SidebarComponent, SignupComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
