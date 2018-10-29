@@ -1,8 +1,9 @@
 <ul>
-  <li><a href="default.asp">Home</a></li>
-  <li><a href="news.asp">News</a></li>
-  <li><a href="contact.asp">Contact</a></li>
-  <li><a href="about.asp">About</a></li>
+  <li>
+    <a routerLink="" [class.activated]="currentUrl == '/'">
+      Home
+    </a>
+  </li>
   <li>
     <a routerLink="login" [class.activated]="currentUrl == '/login'">
       login
@@ -13,4 +14,6 @@
       Not Registered? Signup here
     </a>
   </li>
+  <li><a href="contact.asp">Contact</a></li>
+  <li><a href="about.asp">About</a></li>
 </ul>
