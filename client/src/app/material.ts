@@ -10,7 +10,6 @@ import {
   MatDividerModule,
   MatExpansionModule,
   MatGridListModule,
-  MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
@@ -36,6 +35,7 @@ import {
   MatCheckboxModule
 } from "@angular/material";
 import { MatFormFieldModule, MatFormField } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
 
 import { NgModule } from "@angular/core";
 
@@ -78,7 +78,8 @@ import { NgModule } from "@angular/core";
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatIconModule
   ],
   exports: [
     MatButtonModule,
@@ -119,7 +120,8 @@ import { NgModule } from "@angular/core";
     MatTooltipModule,
     MatTreeModule,
     MatFormFieldModule,
-    MatFormField
+    MatFormField,
+    MatIconModule
   ]
 })
 export class MaterialModule {}
