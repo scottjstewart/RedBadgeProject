@@ -1,11 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-sidebar></app-sidebar>
-<div class="banner" style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<router-outlet></router-outlet>
-<div class="footer">
-  <app-footer></app-footer>
+<div class="wrapper">
+  <app-sidebar></app-sidebar>
+  <div class="body">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
 </div>

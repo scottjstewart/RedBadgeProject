@@ -1,0 +1,17 @@
+.example-card {
+  max-width: 25vw;
+  margin: 24px;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+
+.white {
+  color: antiquewhite;
+}
+
+.yellow {
+  color: yellow;
+}
