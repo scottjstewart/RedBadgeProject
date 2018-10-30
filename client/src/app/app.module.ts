@@ -6,12 +6,7 @@ import { LoginComponent } from "./login/login.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http'
 import {
   MatAutocompleteModule,
@@ -59,12 +54,11 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     CdkTableModule,
-    CdkTreeModule,
     DragDropModule,
     MatAutocompleteModule,
     MatBadgeModule,
@@ -101,8 +95,7 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    ScrollingModule,
-  ],
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })

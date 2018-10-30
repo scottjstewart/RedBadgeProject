@@ -32,7 +32,7 @@ router.post('/login', (req, res) => {
     .then(
         user => {
             if (user) {
-                bcrypt.compare(req.body, user.password, (err, matches) => {
+                bcrypt.compare(req.body.password, user.password, (err, matches) => {
                     if (matches) {
                         let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24})
                         res.json({
@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
                             sessionToken: token
                         })
                     } else {
-                        res.status(502).send({erroe: 'bad gateway'})
+                        res.status(502).send({error: 'bad gateway'})
                     }
                 })
             } else {
