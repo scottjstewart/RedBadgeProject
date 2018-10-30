@@ -3,6 +3,8 @@ const app = express();
 const User = require('./controllers/usercontroller')
 const sequelize = require('./db')
 const bodyParser = require('body-parser')
+const Buzz = require('./controllers/buzzcontroller')
+const Client = require('./controllers/clientcontroller')
 
 // const validatesession = require('../middleware/validate-session')
 
@@ -15,8 +17,12 @@ app.use(require('./middleware/header'))
 
 app.use('/user', User)
 
+
 app.use(require('./middleware/validate-session'))
 
+app.use('/buzz', Buzz)
+
+app.use('/client', Client)
 
 app.use('/api/test', function(req, res){
     res.send("Looks like this is working...because we are awesome");
