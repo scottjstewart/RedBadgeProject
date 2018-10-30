@@ -1,3 +1,9 @@
+.wrapper {
+  color: #6200ee;
+}
+h1 {
+  color: #6200ee;
+}
 * {
   box-sizing: border-box;
 }
@@ -71,4 +77,16 @@ button:hover {
   .signupbtn {
     width: 100%;
   }
+}
+.example-form {
+  text-align: center;
+  color: #ddd;
+  min-width: 90vw;
+  max-width: 100vw;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+  color: #ddd;
 }
