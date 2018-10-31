@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../data.user.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,12 @@ export class LoginComponent implements OnInit {
   log: any
   credentials: FormGroup
 
-  constructor(private user: UserService, private fb: FormBuilder) { }
+  constructor(
+    private user: UserService,
+    private fb: FormBuilder,
+    private router: Router,
+    public snack: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.credentials = this.fb.group({
@@ -26,7 +33,13 @@ export class LoginComponent implements OnInit {
 
     console.log('login init with', cred, password)
     this.user.login(cred, password).subscribe(
-      res => this.log = res
+      res => {
+        if (res.auth === true) {
+          this.log = res
+          this.snack.open("Login Successful", "OK", { duration: 1800 })
+          this.router.navigate(['about'])
+        }
+      }
     )
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../data.user.service';
 import { User } from '../user.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +16,9 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private user: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    public snack: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -31,7 +35,13 @@ export class SignupComponent implements OnInit {
     let user: User = this.buildUser.value
     console.log('makeUser init', user)
     this.user.makeUser(user).subscribe(
-      res => this.log = res
+      res => {
+        if (res.auth === true) {
+          this.log = res
+          this.snack.open("Login Successful", "OK", { duration: 1800 })
+          this.router.navigate(['about'])
+        }
+      }
     )
   }
 
