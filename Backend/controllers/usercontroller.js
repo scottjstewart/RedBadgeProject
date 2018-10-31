@@ -1,8 +1,9 @@
-const router = require('express').Router()
-const User = require('../db').import('../models/user')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-// const validatesession = require('../middleware/validate-session')
+let router = require('express').Router()
+let bcrypt = require('bcryptjs')
+let jwt = require('jsonwebtoken')
+let sequelize = require('../db')
+let User = sequelize.import('../models/user')
+let validateSession = require('../middleware/validate-session')
 // const sequelize = require('../db').import('../models/user')
 
 router.post('/signup', (req, res) => {
@@ -58,6 +59,34 @@ router.get('/', (req, res) => {
     User.findAll()
         .then(user => res.status(200).json(user))
         .catch(err => res.status(500).json({error: err}))
+})
+
+router.delete('/delete', validateSession, (req, res) => {
+    if (!req.errors) {
+        User.destroy({ where: {id: req.user.id}})
+            .then(user => res.status (200).json(user))
+            .catch(err => res.json(req.error))
+    } else {
+        res.status(500).json(req.error)
+    }
+})
+router.put('/update', validateSession, (req, res) => {
+    User.findOne({where: {id: req.user.id}}).then(user => {
+    newUser = {
+        password: req.body.password && req.body.password !== '' ? bcrypt.hashSync(req.body.password, 10) : user.password,
+        firstName: req.body.firstName && req.body.firstName !== '' ? req.body.firstName : user.firstName,
+        lastName: req.body.lastName && req.body.lastName !== '' ? req.body.lastName : user.lastName,
+        email: req.body.email && req.body.email !== '' ? req.body.email : user.email,
+        userName: req.body.userName && req.body.userName !== '' ? req.body.userName : user.userName
+    }
+    if (!req.errors) {
+        user.update(newUser, {where: {id: user.id}})
+        .then(userN => res.status (200).json(userN))
+        .catch(error => res.json(error))
+    } else {
+    res.status(500).json(req.error)
+        }
+    })
 })
 
 module.exports = router
