@@ -20,6 +20,7 @@ router.post('/signup', (req, res) => {
 
                 res.json({
                     user: user,
+                    auth: true,
                     message: 'User successfuly created',
                     sessionToken: token
                 })
@@ -37,6 +38,7 @@ router.post('/login', (req, res) => {
                             let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
                             res.json({
                                 user: user,
+                                auth: true,
                                 message: 'Success!',
                                 sessionToken: token
                             })
