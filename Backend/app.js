@@ -9,7 +9,7 @@ const Client = require('./controllers/clientcontroller')
 // const validatesession = require('../middleware/validate-session')
 
 
-sequelize.sync();
+sequelize.sync({force: true});
 
 app.use(bodyParser.json());
 

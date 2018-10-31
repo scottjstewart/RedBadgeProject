@@ -17,14 +17,5 @@ sequelize.authenticate().then(
     }
 );
 
-// const db = {}
-// db.Sequelize = Sequelize
-// db.sequelize = sequelize
-
-// User = require('./models/user')(sequelize, Sequelize)
-// Buzz = require('./models/buzz')(sequelize, Sequelize)
-
-// Buzz.belongsTo(User, {foreignKey: 'buzzId'})
-
 
 module.exports = sequelize;

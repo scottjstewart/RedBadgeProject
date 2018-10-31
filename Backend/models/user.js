@@ -27,6 +27,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
-    })
+    });
+
+    User.associate = (models) => {
+        user.hasMany(models.Buzz, {
+            foreignKey: 'owner',
+        });
+        user.hasMany(models.Client, {
+            foreignKey: 'creatorId',
+        })
+    }
     return User
 }
