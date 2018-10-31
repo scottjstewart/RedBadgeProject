@@ -1,42 +1,39 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { catchError, tap, map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, tap, map } from 'rxjs/operators'
+import { User } from './user.model';
 
-const url = "/user";
+const url = 'http://localhost:3000/user'
+let options = new HttpHeaders({
+  'Content-Type': 'application/json'
+})
+
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(cred: string, password: string): Observable<any> {
-    return this.http.post(`${url}/login`, { cred, password }).pipe(
-      // tap(result => localStorage.setItem('sessionToken', result.sessionToken)),
-      catchError(this.handleError("postLogin", []))
-    );
+    return this.http.post<any>(`${url}/login`, { userName: cred, password: password }).pipe(
+      tap(_result => localStorage.setItem('sessionToken', _result.sessionToken)),
+      catchError(this.handleError('postLogin', []))
+    )
   }
 
-  handleError<T>(operation = "operation", result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
       return of(result as T);
     };
   }
 
-  makeUser(
-    fn: string,
-    ln: string,
-    username: string,
-    email: string,
-    password: string
-  ): Observable<object> {
-    return this.http
-      .post(`${url}/signup`, { fn, ln, username, email, password })
-      .pipe(
-        tap(),
-        catchError(this.handleError("makeUser", []))
-      );
+  makeUser(user: User): Observable<any> {
+    return this.http.post<User>(`${url}/signup`, user).pipe(
+      tap((thing: User) => localStorage.setItem('sessionToken', thing.sessionToken)),
+      catchError(this.handleError('makeUser', []))
+    )
   }
 }

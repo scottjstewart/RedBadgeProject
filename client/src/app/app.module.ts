@@ -11,12 +11,12 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "./material";
-
 import { SignupComponent } from "./signup/signup.component";
 import { FooterComponent } from "./footer/footer.component";
 import { HomeComponent } from "./home/home.component";
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -38,10 +38,12 @@ import { AboutComponent } from './about/about.component';
     CdkTreeModule,
     DragDropModule,
     ScrollingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 
