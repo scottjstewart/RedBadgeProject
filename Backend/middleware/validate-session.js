@@ -11,15 +11,17 @@ module.exports = function(req, res, next) {
         else {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                 if(decoded) {
+                    console.log('decoded', decoded.id)
                     User.findOne({where: {id: decoded.id}}).then(user => {
                         req.user = user;
+                        console.log('validate session triggered', req.user, user)
                         next();
                     },
                     function(){
-                        res.status(401).send({error: 'Not Authorized'});
+                        res.status(401).send({error: 'not Authorized'});
                     })
                 } else {
-                    res.status(400).send({error: 'Not Authorized'})
+                    res.status(400).send({error: 'Not authorized'})
                 }
             });
         }

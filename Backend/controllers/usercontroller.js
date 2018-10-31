@@ -20,6 +20,7 @@ router.post('/signup', (req, res) => {
 
             res.json({
                 user: user,
+                auth: true,
                 message: 'User successfuly created',
                 sessionToken: token
             })
@@ -28,7 +29,7 @@ router.post('/signup', (req, res) => {
     )
 })
 router.post('/login', (req, res) => {
-    User.findOne({ where: {email: req.body.email } } )
+    User.findOne({ where: {userName: req.body.userName } } )
     .then(
         user => {
             if (user) {
@@ -37,6 +38,7 @@ router.post('/login', (req, res) => {
                         let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24})
                         res.json({
                             user: user,
+                            auth: true,
                             message: 'Success!',
                             sessionToken: token
                         })
@@ -50,6 +52,12 @@ router.post('/login', (req, res) => {
         },
         err => res.status(501).send({error: 'failed to process' })
     )
+})
+
+router.get('/', (req, res) => {
+    User.findAll()
+        .then(user => res.status(200).json(user))
+        .catch(err => res.status(500).json({error: err}))
 })
 
 module.exports = router
