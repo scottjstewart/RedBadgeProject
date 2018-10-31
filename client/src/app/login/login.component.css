@@ -6,6 +6,10 @@ form {
 
 .wrapper {
   background-image: url("../../assetsmain/matt-nelson-168468-unsplash.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 /* Full-width inputs */
