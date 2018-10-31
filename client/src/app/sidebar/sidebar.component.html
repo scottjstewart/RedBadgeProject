@@ -14,12 +14,12 @@
       Not Registered?<span><br></span>Signup Here
     </a>
   </li>
+  <li> <a routerLink="about" [class.activated]="currentUrl == '/about'">
+      Buzzes!
+    </a></li>
   <li>
     <a routerLink="contact" [class.activated]="currentUrl == '/contact'">
       contact
     </a>
   </li>
-  <li> <a routerLink="about" [class.activated]="currentUrl == '/about'">
-      Buzzes!
-    </a></li>
 </ul>
