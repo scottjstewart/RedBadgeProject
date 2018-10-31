@@ -22,5 +22,9 @@
 }
 
 .wrapper {
-  background-image: url("../../assetsmain/aniket-deole-294646-unsplash.jpg");
+  background-image: url("../../assetsmain/nick-fewings-568466-unsplash.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
