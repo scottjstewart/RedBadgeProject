@@ -52,4 +52,10 @@ router.post('/login', (req, res) => {
         )
 })
 
+router.get('/', (req, res) => {
+    User.findAll()
+        .then(user => res.status(200).json(user))
+        .catch(err => res.status(500).json({error: err}))
+})
+
 module.exports = router
