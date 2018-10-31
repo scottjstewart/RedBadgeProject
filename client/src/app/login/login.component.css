@@ -1,7 +1,11 @@
 /* Bordered form */
 form {
   width: 98%;
-  padding: 10px 10px 10px 10px
+  padding: 10px 10px 10px 10px;
+}
+
+.wrapper {
+  background-image: url("../../assetsmain/matt-nelson-168468-unsplash.jpg");
 }
 
 /* Full-width inputs */
@@ -15,11 +19,11 @@ mat-form-field {
   box-sizing: border-box;
 }
 
-input{
-  color: white
+input {
+  color: white;
 }
 
-mat-checkbox{
+mat-checkbox {
   color: white;
 }
 

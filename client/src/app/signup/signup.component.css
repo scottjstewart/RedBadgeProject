@@ -1,13 +1,13 @@
-.wrapper {
-  color: #6200ee;
-}
 h1 {
-  color: #6200ee;
+  color: yellow;
 }
-* {
-  box-sizing: border-box;
+p {
+  color: yellow;
 }
-*/
+form {
+  width: 98%;
+  padding: 10px 10px 10px 10px;
+}
 /* Full-width inputs */
 mat-form-field {
   width: 100%;
@@ -17,7 +17,6 @@ mat-form-field {
   margin: 8px 0;
   display: block;
   box-sizing: border-box;
-  opacity: 0.1;
 }
 
 .container {
@@ -29,14 +28,12 @@ mat-form-field {
 }
 
 .wrapper {
-  background-image: url("./signupassets/andre-benz-290006-unsplash.jpg");
+  background-image: url("../../assetsmain/matt-nelson-168468-unsplash.jpg");
 }
-.container > * {
-  width: 100%;
-}
+
 .example-form {
   text-align: center;
-  color: yellow;
+  color: #3700b3;
   min-width: 90vw;
   max-width: 100vw;
   width: 100%;
@@ -48,5 +45,9 @@ mat-form-field {
 }
 
 .yellow {
-  color: yellow !important;
+  color: #3700b3 !important;
+}
+
+.footer {
+  width: 100vw;
 }
