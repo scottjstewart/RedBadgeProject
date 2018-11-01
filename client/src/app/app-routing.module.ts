@@ -5,8 +5,12 @@ import { LoginComponent } from "../app/login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { ContactComponent } from "./contact/contact.component";
 import { AboutComponent } from "./about/about.component";
+
 import { UserGuard } from "./user.guard";
 import { NotFoundComponent } from "./not-found/not-found.component";
+
+import { BuzzcommentsComponent } from "./buzzcomments/buzzcomments.component";
+
 
 const routes: Routes = [
   {
@@ -33,6 +37,11 @@ const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent
+  },
+  {
+    path: "buzzcomments",
+    component: BuzzcommentsComponent
+
   }
 
 ];

@@ -17,12 +17,16 @@ import { HomeComponent } from "./home/home.component";
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { NotFoundComponent } from './not-found/not-found.component'
 import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
   return localStorage.getItem('sessionToken')
 }
+
+import { BuzzcommentsComponent } from './buzzcomments/buzzcomments.component'
+
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ export function tokenGetter() {
     ContactComponent,
     AboutComponent,
     NotFoundComponent,
+    BuzzcommentsComponent
   ],
   imports: [
     BrowserModule,
