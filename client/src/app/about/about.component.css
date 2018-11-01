@@ -4,7 +4,7 @@
 }
 
 .example-header-image {
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-image: url("https://pbs.twimg.com/profile_images/696916164115611648/eckHGwSL_400x400.jpg");
   background-size: cover;
 }
 
@@ -27,4 +27,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  height: 100vh;
+  width: 100vw;
 }

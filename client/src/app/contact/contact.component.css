@@ -1,6 +1,8 @@
 /* Style inputs with type="text", select elements and textareas */
 .body {
   background-image: url("./aditya-chinchure-494048-unsplash.jpg");
+  height: 100vh;
+  width: 100vw;
 }
 
 h1 {
