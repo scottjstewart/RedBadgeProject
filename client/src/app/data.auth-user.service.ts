@@ -2,27 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt'
 
-const authURL: string = ''
-
+const url: string = 'http://localhost:3000'
 const httpAuthOptions = {
   headers: new HttpHeaders({
-    "Content-Type": "application/json",
-    Authorization: localStorage.getItem('sessionToken')
-  }),
-  body: {
-    username: '',
-    password: ''
-  }
-}
 
+  })
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthUserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private jwt: JwtHelperService
+  ) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -33,20 +30,27 @@ export class AuthUserService {
 
   updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
     let token = localStorage.getItem('sessionToken')
-    return this.http.put(authURL, httpAuthOptions).pipe(
+    return this.http.put(url, httpAuthOptions).pipe(
       tap(),
       catchError(this.handleError('updateUser', []))
     )
   }
 
   deleteUser(username: string, password: string): Observable<any> {
-    httpAuthOptions.body.username = username,
-      httpAuthOptions.body.password = password
+    return this.http.delete<any>(`${url}/user/delete`, httpAuthOptions)
+      .pipe(
+        tap(),
+        catchError(this.handleError('deletUser', []))
+      )
+  }
 
-    return this.http.delete(authURL, httpAuthOptions).pipe(
-      tap(),
-      catchError(this.handleError('deletUser', []))
-    )
+  loggedIn(): boolean {
+    let token = localStorage.getItem('sessionToken')
+    if (token && token !== null && token !== '') {
+      return !this.jwt.isTokenExpired()
+    } else {
+      return false
+    }
   }
 
 }

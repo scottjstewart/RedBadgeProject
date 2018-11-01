@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthUserService } from '../data.auth-user.service';
+import { Router, NavigationEnd, Event } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-
-  constructor() { }
+  logStat: boolean
+  constructor(
+    private auth: AuthUserService,
+    private router: Router
+  ) {
+    router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.logStat = auth.loggedIn()
+      }
+    })
+  }
 
   ngOnInit() {
+    this.logStat = this.auth.loggedIn()
+  }
+
+  logout() {
+    localStorage.removeItem('sessionToken')
+    this.router.navigate([''])
   }
 
 }
