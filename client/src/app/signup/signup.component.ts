@@ -32,14 +32,6 @@ export class SignupComponent implements OnInit {
   }
 
   makeUser(): void {
-    let user: User = this.buildUser.value
-    this.user.makeUser(user).subscribe(
-      res => {
-        if (res.auth === true) {
-          this.log = res
-          this.snack.open("Login Successful", "OK", { duration: 1800 })
-          this.router.navigate(['about'])
-        }
     let user: User = this.buildUser.value;
     this.user.makeUser(user).subscribe(res => {
       if (res.auth === true) {
@@ -47,6 +39,14 @@ export class SignupComponent implements OnInit {
         this.snack.open("Login Successful", "OK", { duration: 1800 });
         this.router.navigate(["about"]);
       }
+      let user: User = this.buildUser.value;
+      this.user.makeUser(user).subscribe(res => {
+        if (res.auth === true) {
+          this.log = res;
+          this.snack.open("Login Successful", "OK", { duration: 1800 });
+          this.router.navigate(["about"]);
+        }
+      });
     });
   }
 }
