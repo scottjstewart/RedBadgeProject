@@ -5,13 +5,14 @@
     </a>
   </li>
   <li>
-    <a routerLink="login" [class.activated]="currentUrl == '/login'">
-      login
+    <a *ngIf="logStat===false" routerLink="login" [class.activated]="currentUrl == '/login'">
+      Login
     </a>
+    <a *ngIf="logStat===true" (click)=logout()>Logout</a>
   </li>
-  <li>
+  <li *ngIf="logStat===false">
     <a routerLink="signup" [class.activated]="currentUrl == '/signup'">
-      Not Registered?<span><br></span>Signup Here
+      Signup
     </a>
   </li>
   <li> <a routerLink="about" [class.activated]="currentUrl == '/about'">
@@ -19,7 +20,7 @@
     </a></li>
   <li>
     <a routerLink="contact" [class.activated]="currentUrl == '/contact'">
-      contact
+      Contact
     </a>
   </li>
   <div class="logo">

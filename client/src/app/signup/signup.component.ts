@@ -33,7 +33,6 @@ export class SignupComponent implements OnInit {
 
   makeUser(): void {
     let user: User = this.buildUser.value
-    console.log('makeUser init', user)
     this.user.makeUser(user).subscribe(
       res => {
         if (res.auth === true) {

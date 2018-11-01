@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     let cred = this.credentials.controls.userName.value
     let password = this.credentials.controls.password.value
 
-    console.log('login init with', cred, password)
     this.user.login(cred, password).subscribe(
       res => {
         if (res.auth === true) {
