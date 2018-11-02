@@ -1,8 +1,8 @@
 let express = require('express');
 let router = express.Router();
-let sequelize = require('../db')
-let Client = sequelize.import('../models/client')
-let User = sequelize.import('../models/user')
+let db = require('../db')
+let Client = db.sequelize.import('../models/client')
+let User = db.sequelize.import('../models/user')
 let validateSession = require('../middleware/validate-session')
 
 

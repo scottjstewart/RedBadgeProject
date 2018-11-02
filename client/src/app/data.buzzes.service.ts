@@ -8,7 +8,7 @@ export class BuzzesService {
   constructor(private http: HttpClient) {}
 
   getBuzzes() {
-    return this.http.get("/buzz");
+    return this.http.get("/buzz/get");
   }
 
   getBuzz(userId) {

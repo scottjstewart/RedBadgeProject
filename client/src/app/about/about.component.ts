@@ -7,11 +7,11 @@ import { BuzzesService } from "../data.buzzes.service";
   styleUrls: ["./about.component.css"]
 })
 export class AboutComponent implements OnInit {
-  users$: Object;
+  buzzes$: Object;
 
   constructor(private data: BuzzesService) {}
 
   ngOnInit() {
-    this.data.getUsers().subscribe(data => (this.users$ = data));
+    this.data.getBuzzes().subscribe(data => (this.buzzes$ = data));
   }
 }
