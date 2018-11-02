@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CommentDialogComponent } from "./comment.dialog/comment.dialog.component";
 import { AuthUserService } from "../data.auth-user.service";
+import { BuzzesService } from "../data.buzzes.service";
+
 
 @Component({
   selector: "app-about",

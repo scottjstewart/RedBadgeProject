@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Buzz = sequelize.define('buzz', {
+        userId: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
         location: {
             type: DataTypes.STRING,
             allowNull: false
@@ -15,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         details: {
             type: DataTypes.STRING
         },
-        owner: {
-            type: DataTypes.UUID
-        }
+        upVote: {
+            type: DataTypes.INTEGER
+        },
     });
 
-    return Buzz
+    return Buzz;
 }
