@@ -1,78 +1,155 @@
-let router = require('express').Router()
 let bcrypt = require('bcryptjs')
 let jwt = require('jsonwebtoken')
-let sequelize = require('../db')
-let User = sequelize.import('../models/user')
+let db = require('../db')
+let user = db.sequelize.import('../models/user')
 let validateSession = require('../middleware/validate-session')
-// const sequelize = require('../db').import('../models/user')
 
-router.post('/signup', (req, res) => {
-    User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 10),
-        userName: req.body.userName
-    })
-        .then(
-            createSuccess = (user) => {
-                let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
-                console.log(token)
 
-                res.json({
-                    user: user,
-                    auth: true,
-                    message: 'User successfuly created',
-                    sessionToken: token
-                })
-            },
-            createError = err => res.send(500, err.message)
-        )
-})
-router.post('/login', (req, res) => {
-    User.findOne({ where: { userName: req.body.userName } })
-        .then(
-            user => {
-                if (user) {
-                    bcrypt.compare(req.body.password, user.password, (err, matches) => {
-                        if (matches) {
-                            let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
-                            res.json({
-                                user: user,
-                                auth: true,
-                                message: 'Success!',
-                                sessionToken: token
-                            })
-                        } else {
-                            res.status(502).send({ error: 'bad gateway' })
-                        }
-                    })
-                } else {
-                    res.status(500).send({ error: 'failed to authenticate' })
+module.exports = (app, db) => {
+    app.get('/user', (req, res) => {
+        db.users.findAll({
+          include: [
+            {
+              model: db.buzzs,
+              include: [
+                {
+                  model: db.comments
                 }
-            },
-            err => res.status(501).send({ error: 'failed to process' })
-        )
-})
+              ]
+            }
+          ]
+        }).then(users => {
+          const resObj = users.map(user => {
+    
+            //tidy up the user data
+            return Object.assign(
+              {},
+              {
+                userId: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                password: bcrypt.hashSync(user.password, 10),
+                userName: user.userName,
+                pet: user.pet,
+                buzzs: user.buzzs.map(buzz => {
+    
+                  //tidy up the post data
+                  return Object.assign(
+                    {},
+                    {
+                      buzzId: buzz.id,
+                      userId: buzz.userId,
+                      location: buzz.location,
+                      price: buzz.price,
+                      funFactor: buzz.funFactor,
+                      details: buzz.details,
+                      comments: buzz.comments.map(comment => {
+    
+                        //tidy up the comment data
+                        return Object.assign(
+                          {},
+                          {
+                            commentId: comment.id,
+                            buzzId: comment.buzzId,
+                            userId: comment.userId,
+                            commenter: comment.commenterUserName,
+                          }
+                        )
+                      })
+                    }
+                    )
+                })
+              }
+            )
+          });
+          res.json(resObj)
+        });
+      });
 
-router.get('/', (req, res) => {
-    User.findAll()
+    app.post('/user/signup', (req, res) => {
+        // const newUser = req.body;
+        user.create({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 10),
+            userName: req.body.userName,
+        })
+         .then(
+            createSuccess = (newUser) => {
+              let token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
+              console.log(token)
+              let resUser = {
+                userName: newUser.userName,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                email: newUser.email,
+                id: newUser.userId
+              }
+              res.json({
+                  user: resUser,
+                  auth: true,
+                  message: 'User successfuly created',
+                  sessionToken: token
+              })
+          },
+          createError = err => res.send(500, err.message)
+        )
+      });
+
+      app.post('/user/login', (req, res) => {
+        user.findOne({where: {userName: req.body.userName } } )
+          .then(
+            user => {
+              if (user) {
+                bcrypt.compare(req.body.password, user.password, (err, matches) => {
+                  if (matches) {
+                      let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
+                      let resUser = {
+                        userName: user.userName,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        id: user.userId
+                      }
+                      res.json({
+                          user: resUser,
+                          auth: true,
+                          message: 'Success!',
+                          sessionToken: token
+                      })
+                  } else {
+                      res.status(502).send({ error: 'bad gateway' })
+                  }
+              })
+          } else {
+              res.status(500).send({ error: 'failed to authenticate' })
+          }
+      },
+      err => res.status(501).send({ error: 'failed to process' })
+        )
+  })
+
+  app.get('/user/get', validateSession, (req, res) => {
+    user.findAll()
         .then(user => res.status(200).json(user))
         .catch(err => res.status(500).json({error: err}))
 })
 
-router.delete('/delete', validateSession, (req, res) => {
+app.delete('/user/delete', validateSession, (req, res) => {
     if (!req.errors) {
-        User.destroy({ where: {id: req.user.id}})
+        user.destroy({ where: {id: req.user.id}})
             .then(user => res.status (200).json(user))
             .catch(err => res.json(req.error))
     } else {
         res.status(500).json(req.error)
     }
 })
-router.put('/update', validateSession, (req, res) => {
-    User.findOne({where: {id: req.user.id}}).then(user => {
-    newUser = {
+
+app.put('/user/update', validateSession, (req, res) => {
+    user.findOne({where: {id: req.user.id}}).then(user => {
+    nUser = {
         password: req.body.password && req.body.password !== '' ? bcrypt.hashSync(req.body.password, 10) : user.password,
         firstName: req.body.firstName && req.body.firstName !== '' ? req.body.firstName : user.firstName,
         lastName: req.body.lastName && req.body.lastName !== '' ? req.body.lastName : user.lastName,
@@ -80,7 +157,7 @@ router.put('/update', validateSession, (req, res) => {
         userName: req.body.userName && req.body.userName !== '' ? req.body.userName : user.userName
     }
     if (!req.errors) {
-        user.update(newUser, {where: {id: user.id}})
+        user.update(nUser, {where: {id: user.id}})
         .then(userN => res.status (200).json(userN))
         .catch(error => res.json(error))
     } else {
@@ -88,5 +165,4 @@ router.put('/update', validateSession, (req, res) => {
         }
     })
 })
-
-module.exports = router
+}

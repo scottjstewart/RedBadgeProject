@@ -1,26 +1,30 @@
 const express = require('express');
 const app = express();
 const User = require('./controllers/usercontroller')
-const sequelize = require('./db')
+const db = require('./db')
 const bodyParser = require('body-parser')
 const Buzz = require('./controllers/buzzcontroller')
 const Client = require('./controllers/clientcontroller')
+const Com = require('./controllers/commentcontroller')
+const router = require('./controllers/router')
 
-// const validatesession = require('../middleware/validate-session')
+
+db.sequelize.sync();
 
 
-sequelize.sync();
 
 app.use(bodyParser.json());
-
 app.use(require('./middleware/header'))
 
-app.use('/user', User)
+router(app, db)
 
+app.use('/user', User)
 
 app.use(require('./middleware/validate-session'))
 
 app.use('/buzz', Buzz)
+
+app.use('/comment', Com)
 
 app.use('/client', Client)
 

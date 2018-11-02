@@ -27,15 +27,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+        pet: {
+            type: DataTypes.ENUM('squirrel', 'cat', 'dog'),
+            defaultValue: 'squirrel',
+            allowNull: false 
+        },
     });
-
-    User.associate = (models) => {
-        user.hasMany(models.Buzz, {
-            foreignKey: 'owner',
-        });
-        user.hasMany(models.Client, {
-            foreignKey: 'creatorId',
-        })
-    }
     return User
 }
