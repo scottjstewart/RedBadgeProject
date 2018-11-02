@@ -18,7 +18,17 @@ export class UserService {
 
   login(cred: string, password: string): Observable<any> {
     return this.http.post<any>(`${url}/login`, { userName: cred, password: password }).pipe(
-      tap(_result => localStorage.setItem('sessionToken', _result.sessionToken)),
+      tap(_result => {
+        let currentUser = {
+          id: _result.user.id,
+          firstName: _result.user.firstName,
+          lastName: _result.user.lastName,
+          username: _result.user.userName,
+          email: _result.user.email
+        }
+        localStorage.setItem('currentUser', JSON.stringify(currentUser))
+        localStorage.setItem('sessionToken', _result.sessionToken)
+      }),
       catchError(this.handleError('postLogin', []))
     )
   }
