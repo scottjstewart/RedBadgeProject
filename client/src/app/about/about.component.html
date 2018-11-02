@@ -35,7 +35,7 @@
 <div>
   <h2 class="yellow">All Buzzes Near You!</h2>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let buzz of buzzes" [id]="buzz.id">
+    <mat-expansion-panel *ngFor="let buzz of buzzes$" [id]="buzz.id">
       <mat-expansion-panel-header>
         <mat-panel-title>{{buzz.title}}</mat-panel-title>
         <mat-panel-description>
