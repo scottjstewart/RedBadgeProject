@@ -48,7 +48,6 @@ module.exports = (app, db) => {
                     }
                     )
                 })
-              model: db.comments
               }
             ]
           }
@@ -144,12 +143,12 @@ module.exports = (app, db) => {
                 expiresIn: 60 * 60 * 24
               });
               let resUser = {
-                userName: newUser.userName,
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                email: newUser.email,
-                pet: newUser.pet,
-                id: newUser.userId
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                pet: user.pet,
+                id: user.userId
               }
               res.json({
                   user: resUser,
@@ -157,10 +156,13 @@ module.exports = (app, db) => {
                   message: 'User successfuly created',
                   sessionToken: token
               })
+            }
           },
-          createError = err => res.send(500, err.message)
         )
-      });
+        createError = err => res.send(500, err.message)
+      };
+    })
+  })
 
       app.post('/user/login', (req, res) => {
         user.findOne({where: {userName: req.body.userName } } )
