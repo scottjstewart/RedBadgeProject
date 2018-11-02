@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { BuzzesService } from "../data.buzzes.service";
 
 @Component({
   selector: "app-about",
@@ -6,8 +7,11 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./about.component.css"]
 })
 export class AboutComponent implements OnInit {
-  picture = "./assetsabout/facebook_profile_image.png";
-  constructor() {}
+  users$: Object;
 
-  ngOnInit() {}
+  constructor(private data: BuzzesService) {}
+
+  ngOnInit() {
+    this.data.getUsers().subscribe(data => (this.users$ = data));
+  }
 }
