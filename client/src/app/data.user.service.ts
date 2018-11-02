@@ -16,6 +16,13 @@ let options = new HttpHeaders({
 export class UserService {
   constructor(private http: HttpClient) { }
 
+  // login(cred: string, password: string): Observable<any> {
+  //   return this.http.post<any>(`${url}/login`, { userName: cred, password: password }).pipe(
+  //     tap(_result => localStorage.setItem('sessionToken', _result.sessionToken)),
+  //     catchError(this.handleError('postLogin', []))
+  //   )
+  // }
+
   login(cred: string, password: string): Observable<any> {
     return this.http.post<any>(`${url}/login`, { userName: cred, password: password }).pipe(
       tap(_result => {

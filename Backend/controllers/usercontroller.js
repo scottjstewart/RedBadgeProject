@@ -13,7 +13,42 @@ module.exports = (app, db) => {
             model: db.buzzs,
             include: [
               {
-                model: db.comments
+
+                userId: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                password: bcrypt.hashSync(user.password, 10),
+                userName: user.userName,
+                pet: user.pet,
+                buzzs: user.buzzs.map(buzz => {
+    
+                  //tidy up the post data
+                  return Object.assign(
+                    {},
+                    {
+                      buzzId: buzz.id,
+                      userId: buzz.userId,
+                      location: buzz.location,
+                      price: buzz.price,
+                      funFactor: buzz.funFactor,
+                      details: buzz.details,
+                      comments: buzz.comments.map(comment => {
+    
+                        //tidy up the comment data
+                        return Object.assign(
+                          {},
+                          {
+                            commentId: comment.id,
+                            userId: comment.userId,
+                            commenter: comment.commenterUserName,
+                          }
+                        )
+                      })
+                    }
+                    )
+                })
+              model: db.comments
               }
             ]
           }
@@ -109,25 +144,53 @@ module.exports = (app, db) => {
                 expiresIn: 60 * 60 * 24
               });
               let resUser = {
-                userName: user.userName,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                id: user.userId
-              };
+                userName: newUser.userName,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                email: newUser.email,
+                pet: newUser.pet,
+                id: newUser.userId
+              }
               res.json({
-                user: resUser,
-                auth: true,
-                message: "Success!",
-                sessionToken: token
-              });
-            } else {
-              res.status(502).send({ error: "bad gateway" });
-            }
-          });
-        } else {
-          res.status(500).send({ error: "failed to authenticate" });
-        }
+                  user: resUser,
+                  auth: true,
+                  message: 'User successfuly created',
+                  sessionToken: token
+              })
+          },
+          createError = err => res.send(500, err.message)
+        )
+      });
+
+      app.post('/user/login', (req, res) => {
+        user.findOne({where: {userName: req.body.userName } } )
+          .then(
+            user => {
+              if (user) {
+                bcrypt.compare(req.body.password, user.password, (err, matches) => {
+                  if (matches) {
+                      let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
+                      let resUser = {
+                        userName: user.userName,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        pet: user.pet,
+                        id: user.userId
+                      }
+                      res.json({
+                          user: resUser,
+                          auth: true,
+                          message: 'Success!',
+                          sessionToken: token
+                      })
+                  } else {
+                      res.status(502).send({ error: 'bad gateway' })
+                  }
+              })
+          } else {
+              res.status(500).send({ error: 'failed to authenticate' })
+          }
       },
       err => res.status(501).send({ error: "failed to process" })
     );

@@ -39,4 +39,3 @@ db.users.hasMany(db.comments);
 
 
 module.exports = db;
-module.exports = db;
