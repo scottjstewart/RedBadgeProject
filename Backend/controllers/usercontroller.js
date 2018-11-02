@@ -51,7 +51,6 @@ module.exports = (app, db) => {
                           {},
                           {
                             commentId: comment.id,
-                            buzzId: comment.buzzId,
                             userId: comment.userId,
                             commenter: comment.commenterUserName,
                           }
@@ -85,6 +84,7 @@ module.exports = (app, db) => {
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 email: newUser.email,
+                pet: newUser.pet,
                 id: newUser.userId
               }
               res.json({
@@ -111,6 +111,7 @@ module.exports = (app, db) => {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         email: user.email,
+                        pet: user.pet,
                         id: user.userId
                       }
                       res.json({

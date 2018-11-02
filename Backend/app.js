@@ -18,13 +18,13 @@ app.use(require('./middleware/header'))
 
 router(app, db)
 
-app.use('/user', User)
+// app.use('/user', User)
 
 app.use(require('./middleware/validate-session'))
 
-app.use('/buzz', Buzz)
+// app.use('/buzz', Buzz)
 
-app.use('/comment', Com)
+// app.use('/comment', Com)
 
 app.use('/client', Client)
 

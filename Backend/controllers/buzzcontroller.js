@@ -51,7 +51,6 @@ app.get('/buzz/user', (req, res) => {
                       {},
                       {
                         commentId: comment.id,
-                        buzzId: comment.buzzId,
                         userId: comment.userId,
                         commenter: comment.commenterUserName,
                       }
