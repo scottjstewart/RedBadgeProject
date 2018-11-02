@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Comment for {{title}}:</h2>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <textarea matInput placeholder="Leave a comment" formControlName="comment"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="submit()">Submit</button>
+  <button mat-raised-button (click)="close()">Cancel</button>
+</mat-dialog-actions>

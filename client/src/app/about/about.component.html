@@ -30,34 +30,29 @@
     </mat-card-actions>
   </mat-card>
 
-  <h4 class="yellow">All Buzzes Near You!</h4>
-  <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-
-    <ng-container matColumnDef="funFactor">
-      <th mat-header-cell *matHeaderCellDef> Fun Factor </th>
-      <td mat-cell *matCellDef="let element"> {{element.funFactor}} </td>
-    </ng-container>
-  
-
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef> Location </th>
-      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
-    </ng-container>
-  
-
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef> Price </th>
-      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-    </ng-container>
-  
-
-    <ng-container matColumnDef="details">
-      <th mat-header-cell *matHeaderCellDef> Details </th>
-      <td mat-cell *matCellDef="let element"> {{element.details}} </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table> -->
+</div>
+<div>
+  <h2 class="yellow">All Buzzes Near You!</h2>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let buzz of buzzes" [id]="buzz.id">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{buzz.title}}</mat-panel-title>
+        <mat-panel-description>
+          Price: {{buzz.price}}
+        </mat-panel-description>
+        <mat-panel-description>Rating: {{buzz.rating}}/5</mat-panel-description>
+        <mat-panel-description>category: {{buzz.category}}</mat-panel-description>
+        <mat-panel-description>Location: {{buzz.location}}</mat-panel-description>
+        <mat-panel-description>Votes: {{buzz.upvotes}}/{{buzz.downvotes}}</mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{buzz.description}}</p>
+      <mat-list>
+        <mat-list-item *ngFor="let comment of buzz.comments">
+          <h5>{{comment.commenter}}</h5>
+          <p>{{comment.comment}} </p>
+        </mat-list-item>
+      </mat-list>
+      <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.id)">Comment</button>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
