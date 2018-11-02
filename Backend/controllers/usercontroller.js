@@ -139,12 +139,12 @@ module.exports = (app, db) => {
               expiresIn: 60 * 60 * 24
             });
             let resUser = {
-              userName: newUser.userName,
-              firstName: newUser.firstName,
-              lastName: newUser.lastName,
-              email: newUser.email,
-              pet: newUser.pet,
-              id: newUser.userId
+              userName: user.userName,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              pet: user.pet,
+              id: user.userId
             };
             res.json({
               user: resUser,
