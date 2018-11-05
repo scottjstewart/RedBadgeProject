@@ -5,21 +5,25 @@
     </a>
   </li>
   <li>
-    <a *ngIf="logStat===false" routerLink="login" [class.activated]="currentUrl == '/login'">
+    <a *ngIf="logStat===false" routerLink="/login" [class.activated]="currentUrl == '/login'">
       Login
     </a>
     <a *ngIf="logStat===true" (click)=logout()>Logout</a>
   </li>
   <li *ngIf="logStat===false">
-    <a routerLink="signup" [class.activated]="currentUrl == '/signup'">
+    <a routerLink="/signup" [class.activated]="currentUrl == '/signup'">
       Signup
     </a>
   </li>
-  <li> <a routerLink="about" [class.activated]="currentUrl == '/about'">
+  <li> <a routerLink="/about" [class.activated]="currentUrl == '/about'">
       Buzzes!
-    </a></li>
+    </a>
+  </li>
+  <li *ngIf="logStat===true">
+    <a routerLink="">Start a Buzz</a>
+  </li>
   <li>
-    <a routerLink="contact" [class.activated]="currentUrl == '/contact'">
+    <a routerLink="/contact" [class.activated]="currentUrl == '/contact'">
       Contact
     </a>
   </li>

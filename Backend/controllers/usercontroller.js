@@ -131,119 +131,91 @@ module.exports = (app, db) => {
   });
 
   app.post("/user/login", (req, res) => {
-    user.findOne({ where: { userName: req.body.userName } }).then(user => {
-      if (user) {
-        bcrypt.compare(req.body.password, user.password, (err, matches) => {
-          if (matches) {
-            let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-              expiresIn: 60 * 60 * 24
-            });
-            let resUser = {
-              userName: user.userName,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-              pet: user.pet,
-              id: user.userId
-            };
-            res.json({
-              user: resUser,
-              auth: true,
-              message: "User successfuly created",
-              sessionToken: token
-            });
-          }
-          createError = err => res.send(500, err.message);
-        });
-      }
-    });
+    user.findOne({ where: { userName: req.body.userName } }).then(
+      user => {
+        if (user) {
+          bcrypt.compare(req.body.password, user.password, (err, matches) => {
+            if (matches) {
+              let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+                expiresIn: 60 * 60 * 24
+              });
+              let resUser = {
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
+                id: user.userId
+              };
+              res.json({
+                user: resUser,
+                auth: true,
+                message: "Success!",
+                sessionToken: token
+              });
+            } else {
+              res.status(502).send({ error: "bad gateway" });
+            }
+          });
+        } else {
+          res.status(500).send({ error: "failed to authenticate" });
+        }
+      },
+      err => res.status(501).send({ error: "failed to process" })
+    );
+  });
 
-    app.post("/user/login", (req, res) => {
-      user.findOne({ where: { userName: req.body.userName } }).then(
-        user => {
-          if (user) {
-            bcrypt.compare(req.body.password, user.password, (err, matches) => {
-              if (matches) {
-                let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-                  expiresIn: 60 * 60 * 24
-                });
-                let resUser = {
-                  userName: user.userName,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  email: user.email,
-                  pet: user.pet,
-                  id: user.userId
-                };
-                res.json({
-                  user: resUser,
-                  auth: true,
-                  message: "Success!",
-                  sessionToken: token
-                });
-              } else {
-                res.status(502).send({ error: "bad gateway" });
-              }
-            });
-          } else {
-            res.status(500).send({ error: "failed to authenticate" });
-          }
-        },
-        err => res.status(501).send({ error: "failed to process" })
-      );
-    });
+  app.get("/user/get", validateSession, (req, res) => {
+    user
+      .findAll()
+      .then(user => res.status(200).json(user))
+      .catch(err => res.status(500).json({ error: err }));
+  });
 
-    app.get("/user/get", validateSession, (req, res) => {
+  app.delete("/user/delete", validateSession, (req, res) => {
+    if (!req.errors) {
       user
-        .findAll()
+        .destroy({ where: { id: req.user.id } })
         .then(user => res.status(200).json(user))
-        .catch(err => res.status(500).json({ error: err }));
-    });
+        .catch(err => res.json(req.error));
+    } else {
+      res.status(500).json(req.error);
+    }
+  });
 
-    app.delete("/user/delete", validateSession, (req, res) => {
+  app.put("/user/update", validateSession, (req, res) => {
+    user.findOne({ where: { id: req.user.id } }).then(user => {
+      nUser = {
+        password:
+          req.body.password && req.body.password !== ""
+            ? bcrypt.hashSync(req.body.password, 10)
+            : user.password,
+        firstName:
+          req.body.firstName && req.body.firstName !== ""
+            ? req.body.firstName
+            : user.firstName,
+        lastName:
+          req.body.lastName && req.body.lastName !== ""
+            ? req.body.lastName
+            : user.lastName,
+        email:
+          req.body.email && req.body.email !== ""
+            ? req.body.email
+            : user.email,
+        userName:
+          req.body.userName && req.body.userName !== ""
+            ? req.body.userName
+            : user.userName
+      };
       if (!req.errors) {
         user
-          .destroy({ where: { id: req.user.id } })
-          .then(user => res.status(200).json(user))
-          .catch(err => res.json(req.error));
+          .update(nUser, { where: { id: user.id } })
+          .then(userN => res.status(200).json(userN))
+          .catch(error => res.json(error));
       } else {
         res.status(500).json(req.error);
       }
     });
-
-    app.put("/user/update", validateSession, (req, res) => {
-      user.findOne({ where: { id: req.user.id } }).then(user => {
-        nUser = {
-          password:
-            req.body.password && req.body.password !== ""
-              ? bcrypt.hashSync(req.body.password, 10)
-              : user.password,
-          firstName:
-            req.body.firstName && req.body.firstName !== ""
-              ? req.body.firstName
-              : user.firstName,
-          lastName:
-            req.body.lastName && req.body.lastName !== ""
-              ? req.body.lastName
-              : user.lastName,
-          email:
-            req.body.email && req.body.email !== ""
-              ? req.body.email
-              : user.email,
-          userName:
-            req.body.userName && req.body.userName !== ""
-              ? req.body.userName
-              : user.userName
-        };
-        if (!req.errors) {
-          user
-            .update(nUser, { where: { id: user.id } })
-            .then(userN => res.status(200).json(userN))
-            .catch(error => res.json(error));
-        } else {
-          res.status(500).json(req.error);
-        }
-      });
-    });
   });
+  ;
 };

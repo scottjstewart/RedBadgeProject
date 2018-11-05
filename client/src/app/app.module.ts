@@ -1,5 +1,8 @@
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { UserModule } from "./user-module/user.module";
+import { ClientModule } from "./client-module/client.module";
+import { AdminModule } from "./admin-module/admin.module";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DragDropModule } from "@angular/cdk/drag-drop";
@@ -23,6 +26,7 @@ import { BuzzcommentsComponent } from './buzzcomments/buzzcomments.component';
 import { BuzzDetailComponent } from './buzz-detail/buzz-detail.component';
 import { CommentDialogComponent } from "./about/comment.dialog/comment.dialog.component";
 import { MatDialogModule } from "@angular/material";
+import { UrlInterceptor } from "./intercept.url";
 
 export function tokenGetter() {
   return localStorage.getItem('sessionToken')
@@ -41,10 +45,13 @@ export function tokenGetter() {
     NotFoundComponent,
     BuzzcommentsComponent,
     BuzzDetailComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
   ],
   imports: [
     BrowserModule,
+    UserModule,
+    ClientModule,
+    AdminModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -68,10 +75,14 @@ export function tokenGetter() {
         ],
         authScheme: '',
       }
-    })
+    }),
   ],
   providers: [
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent

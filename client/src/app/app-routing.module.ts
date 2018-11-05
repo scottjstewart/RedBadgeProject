@@ -5,12 +5,8 @@ import { LoginComponent } from "../app/login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { ContactComponent } from "./contact/contact.component";
 import { AboutComponent } from "./about/about.component";
-
-import { UserGuard } from "./user.guard";
 import { NotFoundComponent } from "./not-found/not-found.component";
-
-import { BuzzcommentsComponent } from "./buzzcomments/buzzcomments.component";
-
+import { SidebarComponent } from "./sidebar/sidebar.component";
 
 const routes: Routes = [
   {
@@ -22,28 +18,21 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: "",
-    component: HomeComponent
-  },
-  {
     path: "contact",
     component: ContactComponent
   },
   {
     path: "about",
-    // canActivate: [UserGuard],
     component: AboutComponent,
+  },
+  {
+    path: "",
+    component: HomeComponent
   },
   {
     path: '**',
     component: NotFoundComponent
-  },
-  {
-    path: "buzzcomments",
-    component: BuzzcommentsComponent
-
   }
-
 ];
 
 @NgModule({

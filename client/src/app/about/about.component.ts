@@ -4,6 +4,8 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CommentDialogComponent } from "./comment.dialog/comment.dialog.component";
 import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
+import { LocationService } from "../data.location.service";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: "app-about",
@@ -151,12 +153,12 @@ export class AboutComponent implements OnInit {
     }
   ];
   loggedIn: boolean;
-
-  constructor(private dialog: MatDialog, private auth: AuthUserService) {}
+  loc: any
+  constructor(private dialog: MatDialog, private auth: AuthUserService, private geo: LocationService) { }
 
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn();
-    console.log(this.loggedIn);
+    this.loc = this.geo.getLocation()
   }
 
   openDialog(id: number, title: string) {
@@ -177,4 +179,5 @@ export class AboutComponent implements OnInit {
       }
     });
   }
+
 }

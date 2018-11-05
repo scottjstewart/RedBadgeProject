@@ -1,9 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const Buzz = sequelize.define('buzz', {
-        userId: {
-            type: DataTypes.UUID,
-            allowNull: false
-        },
         location: {
             type: DataTypes.STRING,
             allowNull: false
@@ -14,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         funFactor: {
             type: DataTypes.STRING,
-            allowNull: false  
+            allowNull: false
         },
         details: {
             type: DataTypes.STRING
@@ -22,6 +18,20 @@ module.exports = (sequelize, DataTypes) => {
         upVote: {
             type: DataTypes.INTEGER
         },
+        longitude: {
+            type: DataTypes.DECIMAL,
+            validate: {
+                min: -180,
+                max: 180
+            }
+        },
+        latitude: {
+            type: DataTypes.DECIMAL,
+            validate: {
+                min: -90,
+                max: 90
+            }
+        }
     });
 
     return Buzz;
