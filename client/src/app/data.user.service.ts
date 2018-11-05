@@ -13,7 +13,7 @@ let options = new HttpHeaders({
   providedIn: "root"
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // login(cred: string, password: string): Observable<any> {
   //   return this.http.post<any>(`${url}/login`, { userName: cred, password: password }).pipe(
@@ -24,7 +24,7 @@ export class UserService {
 
   login(cred: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${url}/login`, { userName: cred, password: password })
+      .post<any>(`/user/login`, { userName: cred, password: password })
       .pipe(
         tap(_result => {
           let currentUser = {
@@ -49,7 +49,7 @@ export class UserService {
   }
 
   makeUser(user: User): Observable<any> {
-    return this.http.post<User>(`${url}/signup`, user).pipe(
+    return this.http.post<User>(`/user/signup`, user).pipe(
       tap((thing: User) =>
         localStorage.setItem("sessionToken", thing.sessionToken)
       ),

@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('sessionToken')
+    localStorage.clear()
     this.router.navigate([''])
   }
 

@@ -144,7 +144,8 @@ module.exports = (app, db) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                pet: user.pet,
+                status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
+
                 id: user.userId
               };
               res.json({
@@ -199,7 +200,11 @@ module.exports = (app, db) => {
             ? req.body.lastName
             : user.lastName,
         email:
-          req.body.email && req.body.email !== "" ? req.body.email : user.email,
+
+          req.body.email && req.body.email !== ""
+            ? req.body.email
+            : user.email,
+
         userName:
           req.body.userName && req.body.userName !== ""
             ? req.body.userName
@@ -215,4 +220,9 @@ module.exports = (app, db) => {
       }
     });
   });
+<<<<<<< HEAD
 };
+=======
+  ;
+};
+>>>>>>> bb504c52625a8f6cf928f32f660d50fad5f0c113
