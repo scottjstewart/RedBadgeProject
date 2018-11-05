@@ -5,7 +5,7 @@ let validateSession = require('../middleware/validate-session')
 
 
 module.exports = (app, db) => {
-app.get('/buzz/user', (req, res) => {
+  app.get('/buzz/user', (req, res) => {
     db.users.findAll({
       include: [
         {
@@ -57,7 +57,7 @@ app.get('/buzz/user', (req, res) => {
                     )
                   })
                 }
-                )
+              )
             })
           }
         )
@@ -67,62 +67,66 @@ app.get('/buzz/user', (req, res) => {
   });
   app.get('/buzz/get', (req, res) => {
     buzz.findAll()
-        .then(buzz => res.status(200).json(buzz))
-        .catch(err => res.status(500).json({error: err}))
-})
+      .then(buzz => res.status(200).json(buzz))
+      .catch(err => res.status(500).json({ error: err }))
+  })
 
-app.get('/buzz/own', (req, res) => {
-    buzz.findAll({where: {owner: req.user.id} } )
-        .then(buzz => res.status(200).json(buzz))
-        .catch(err => res.status(500).json({error: err}))
-})
+  app.get('/buzz/own', (req, res) => {
+    buzz.findAll({ where: { owner: req.user.id } })
+      .then(buzz => res.status(200).json(buzz))
+      .catch(err => res.status(500).json({ error: err }))
+  })
 
-app.post('/buzz/makeBuzz', validateSession, (req, res) => {
+  app.post('/buzz/makeBuzz', validateSession, (req, res) => {
     buzz.create({
-            userId: req.user.id,
-            location: req.body.location,
-            price: req.body.price,
-            funFactor: req.body.funFactor,
-            details: req.body.details,
-        }).then(
-            function createSuccess(buzz) {
-                res.json({
-                    buzz: buzz,
-                    message: 'it worked',
-                    
-                })
-            },
-            function createError(err) {
-                res.send(500, err.message)
-            }
-        )
-})
+      userId: req.user.id,
+      location: req.body.location,
+      price: req.body.price,
+      funFactor: req.body.funFactor,
+      details: req.body.details,
+    }).then(
+      function createSuccess(buzz) {
+        res.json({
+          buzz: buzz,
+          message: 'it worked',
 
-app.put('/buzz/update/:id', validateSession, (req, res) => {
-  buzz.findOne({where:{id:req.params.id}}).then(buzz=>{
-      if(buzz.userId === req.user.id){
-          buzz.update(req.body, {where: {id: req.params.id}})
-          .then(buzz => res.status (200).json(buzz))
-          .catch(err => res.json(req.error))    
-      } else{
-          res.status(500).json({
-              message: `User does not own ${req.params.id}`
-          })
+        })
+      },
+      function createError(err) {
+        res.send(500, err.message)
       }
+    )
   })
-})
-app.delete('/buzz/delete/:id', (req, res) => {
-  buzz.findOne({where:{id:req.params.id}}).then(buzz=>{
-      if(buzz.userId === req.user.id){
-          Buzz.destroy({where: {id: req.params.id}})
-          .then(buzz => res.status (200).json(buzz))
-          .catch(err => res.json(req.error))    
-      } else{
-          res.status(500).json({
-              message: `C'mon man! don't delete other peoples stuff!`
-          })
+
+  app.put('/buzz/update/:id', validateSession, (req, res) => {
+    buzz.findOne({ where: { id: req.params.id } }).then(buzz => {
+      if (buzz.userId === req.user.id) {
+        buzz.update(req.body, { where: { id: req.params.id } })
+          .then(buzz => res.status(200).json(buzz))
+          .catch(err => res.json(req.error))
+      } else {
+        res.status(500).json({
+          message: `User does not own ${req.params.id}`
+        })
       }
+    })
   })
-})
+  app.delete('/buzz/delete/:id', (req, res) => {
+    buzz.findOne({ where: { id: req.params.id } }).then(buzz => {
+      if (buzz.userId === req.user.id) {
+        Buzz.destroy({ where: { id: req.params.id } })
+          .then(buzz => res.status(200).json(buzz))
+          .catch(err => res.json(req.error))
+      } else {
+        res.status(500).json({
+          message: `C'mon man! don't delete other peoples stuff!`
+        })
+      }
+    })
+  })
+
+  app.post('/buzz/:buzz/comment/:userid', (req, res) => {
+
+  })
 
 }

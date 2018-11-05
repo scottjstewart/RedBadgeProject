@@ -3,16 +3,16 @@ require('dotenv').config()
 const Sequelize = require('sequelize');
 
 
-const sequelize = new Sequelize (process.env.NAME, 'postgres', process.env.PASS, {
+const sequelize = new Sequelize(process.env.NAME, 'postgres', process.env.PASS, {
     host: 'localhost',
     dialect: 'postgres'
 })
 
 sequelize.authenticate().then(
-    function() {
+    function () {
         console.log('Conected to redbadge database');
     },
-    function(err){
+    function (err) {
         console.log(err);
     }
 );
@@ -29,12 +29,12 @@ db.comments = require('./models/comment.js')(sequelize, Sequelize);
 db.buzzs = require('./models/buzz.js')(sequelize, Sequelize);
 
 //Relations
-db.comments.belongsTo(db.buzzs);
+db.comments.belongsTo(db.buzzs, { through: 'buzzComments' });
 db.comments.belongsTo(db.users);
-db.buzzs.hasMany(db.comments);
-db.buzzs.belongsTo(db.users);
-db.users.hasMany(db.buzzs);
-db.users.hasMany(db.comments);
+db.buzzs.belongsToMany(db.comments, { through: 'buzzComments' });
+db.buzzs.belongsTo(db.users, { as: 'Buzzer' });
+db.users.belongsToMany(db.buzzs, { through: 'userBuzzes' });
+db.users.belongsToMany(db.comments, { through: 'buzzComments' });
 
 
 

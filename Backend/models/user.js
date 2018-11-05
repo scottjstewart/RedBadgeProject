@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('user', {
         id: {
-            type: DataTypes.UUID, 
+            type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
@@ -9,14 +9,17 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastName:{
+        lastName: {
             type: DataTypes.STRING,
             allowNull: false
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                isEmail: true
+            }
         },
         password: {
             type: DataTypes.STRING,
@@ -30,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         pet: {
             type: DataTypes.ENUM('squirrel', 'cat', 'dog'),
             defaultValue: 'squirrel',
-            allowNull: false 
+            allowNull: false
         },
     });
     return User
