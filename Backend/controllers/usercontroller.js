@@ -145,6 +145,7 @@ module.exports = (app, db) => {
                 lastName: user.lastName,
                 email: user.email,
                 status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
+
                 id: user.userId
               };
               res.json({
@@ -199,9 +200,11 @@ module.exports = (app, db) => {
             ? req.body.lastName
             : user.lastName,
         email:
+
           req.body.email && req.body.email !== ""
             ? req.body.email
             : user.email,
+
         userName:
           req.body.userName && req.body.userName !== ""
             ? req.body.userName

@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { Data.BuzzesService } from './data.buzzes.service';
+import { BuzzesService } from "./data.buzzes.service";
 
-describe('Data.BuzzesService', () => {
+describe("Data.BuzzesService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: Data.BuzzesService = TestBed.get(Data.BuzzesService);
+  it("should be created", () => {
+    const service: BuzzesService = TestBed.get(BuzzesService);
     expect(service).toBeTruthy();
   });
 });
