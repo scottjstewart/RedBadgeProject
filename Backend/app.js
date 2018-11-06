@@ -8,7 +8,7 @@ const Client = require("./controllers/clientcontroller");
 const Com = require("./controllers/commentcontroller");
 const router = require("./controllers/router");
 
-db.sequelize.sync({ force: true });
+db.sequelize.sync();
 
 app.use(bodyParser.json());
 app.use(require("./middleware/header"));
