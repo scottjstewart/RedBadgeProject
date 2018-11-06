@@ -8,7 +8,7 @@
     <a *ngIf="logStat===false" routerLink="/login" [class.activated]="currentUrl == '/login'">
       Login
     </a>
-    <a *ngIf="logStat===true" (click)=logout()>Logout</a>
+    <a *ngIf="logStat===true" (click)="logout()">Logout</a>
   </li>
   <li *ngIf="logStat===false">
     <a routerLink="/signup" [class.activated]="currentUrl == '/signup'">

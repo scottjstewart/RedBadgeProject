@@ -6,8 +6,10 @@ import { AuthUserService } from "./data.auth-user.service";
 @Injectable({
   providedIn: "root"
 })
+
 export class DataCommentService {
   newComment: Object;
+
 
   constructor(private http: HttpClient, private auth: AuthUserService) {}
 
