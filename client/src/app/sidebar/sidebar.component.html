@@ -19,8 +19,8 @@
       Buzzes!
     </a>
   </li>
-  <li *ngIf="logStat===true">
-    <a routerLink="">Start a Buzz</a>
+  <li *ngIf="logStat===true" (click)="openDialog()">
+    <a>Start a Buzz</a>
   </li>
   <li>
     <a routerLink="/contact" [class.activated]="currentUrl == '/contact'">

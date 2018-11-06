@@ -12,7 +12,7 @@ export class CommentDialogComponent implements OnInit {
   id: number
   title: string
   form: FormGroup
-  comment: string
+  original: string
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +20,7 @@ export class CommentDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.title = data.title
-    this.comment = data.comment
+    this.original = data.original
   }
 
   ngOnInit() {

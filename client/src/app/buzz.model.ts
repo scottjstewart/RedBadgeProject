@@ -8,4 +8,5 @@ export class Buzz {
     latitude: number;
     user?: string;
     id?: number;
+
 }

@@ -27,6 +27,7 @@ import { BuzzDetailComponent } from './buzz-detail/buzz-detail.component';
 import { CommentDialogComponent } from "./about/comment.dialog/comment.dialog.component";
 import { MatDialogModule } from "@angular/material";
 import { UrlInterceptor } from "./intercept.url";
+import { MakebuzzComponent } from "./user-module/makebuzz/makebuzz.component";
 
 export function tokenGetter() {
   return localStorage.getItem('sessionToken')
@@ -88,7 +89,8 @@ export function tokenGetter() {
     AppComponent
   ],
   entryComponents: [
-    CommentDialogComponent
+    CommentDialogComponent,
+    MakebuzzComponent
   ]
 })
 export class AppModule { }

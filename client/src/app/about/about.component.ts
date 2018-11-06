@@ -4,12 +4,8 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CommentDialogComponent } from "./comment.dialog/comment.dialog.component";
 import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
-
 import { LocationService } from "../data.location.service";
 import { tap } from "rxjs/operators";
-
-import { Observable } from "rxjs";
-
 
 @Component({
   selector: "app-about",
@@ -57,23 +53,24 @@ export class AboutComponent implements OnInit {
   ];
   buzzes$: any;
   loggedIn: boolean;
-
   loc: any
-  constructor(private dialog: MatDialog, private auth: AuthUserService, private geo: LocationService) { }
+  constructor(private dialog: MatDialog,
+    private auth: AuthUserService,
+    private geo: LocationService
+  ) { }
 
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn();
     this.loc = this.geo.getLocation()
-
   }
 
-  openDialog(id: number, title: string) {
+  openDialog(title: string, original: string) {
     const config = new MatDialogConfig();
 
     config.minHeight = "50vh";
-    config.id = id.toString();
     config.data = {
-      title: title
+      title: title,
+      original: original
     };
 
     // this.dialog.open(CommentDialogComponent, config)

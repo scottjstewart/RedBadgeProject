@@ -35,7 +35,7 @@
 <div>
   <h2 class="yellow">All Buzzes Near You!</h2>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let buzz of buzzes$" [id]="buzz.id">
+    <mat-expansion-panel *ngFor="let buzz of buzzes" [id]="buzz.id">
       <mat-expansion-panel-header>
         <mat-panel-title>{{buzz.title}}</mat-panel-title>
         <mat-panel-description>
@@ -53,7 +53,8 @@
           <p>{{comment.comment}} </p>
         </mat-list-item>
       </mat-list>
-      <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.id)">Comment</button>
+      <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.title, buzz.description)">Comment</button>
+      <button mat-raised-button>Go to Buzz Detail</button>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
