@@ -117,7 +117,7 @@ module.exports = (app, db) => {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             email: newUser.email,
-            id: newUser.userId
+            id: newUser.id
           };
           res.json({
             user: resUser,
@@ -126,7 +126,7 @@ module.exports = (app, db) => {
             sessionToken: token
           });
         }),
-        (createError = err => res.send(500, err.message))
+        (createError = err => res.status(500).send(err.message))
       );
   });
 
@@ -145,7 +145,7 @@ module.exports = (app, db) => {
                 lastName: user.lastName,
                 email: user.email,
                 status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
-                id: user.userId
+                id: user.id
               };
               res.json({
                 user: resUser,

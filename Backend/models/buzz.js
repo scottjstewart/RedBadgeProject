@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         upVote: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false
         },
         longitude: {
             type: DataTypes.DECIMAL,
