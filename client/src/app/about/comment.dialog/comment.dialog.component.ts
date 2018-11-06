@@ -34,6 +34,7 @@ export class CommentDialogComponent implements OnInit {
   submit(comment: string) {
     console.log("dialog commnet", comment);
     this.ref.close(this.form.value);
+    this.datas.firstClick();
     // this.datas.createComment(comment);
   }
 
