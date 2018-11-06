@@ -36,7 +36,7 @@ export class DataCommentService {
     return this.http.delete("http://localhost:3000/comment/delete" + commentId);
   }
 
-  submit() {
+  firstClick() {
     return console.log("clicked");
   }
 }
