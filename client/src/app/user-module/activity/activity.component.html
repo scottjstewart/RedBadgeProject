@@ -1,5 +1,5 @@
 <div>
-  <h1>Activity for {{currentUser.firstName}}</h1>
+  <h1>Activity for {{user$.firstName}}</h1>
   <h3>Buzzes</h3>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let buzz of comments" [id]="buzz.id">
