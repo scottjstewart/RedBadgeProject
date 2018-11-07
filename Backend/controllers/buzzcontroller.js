@@ -1,6 +1,7 @@
 let express = require('express');
 let db = require('../db')
 let buzz = db.sequelize.import('../models/buzz')
+let user = db.users
 let validateSession = require('../middleware/validate-session')
 
 

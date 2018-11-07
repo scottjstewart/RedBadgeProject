@@ -8,6 +8,7 @@ import { AboutComponent } from "./about/about.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { MyAccountComponent } from './my-account/my-account.component'
+import { BuzzDetailComponent } from "./buzz-detail/buzz-detail.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: "about",
     component: AboutComponent,
+  },
+  {
+    path: 'buzz/detail',
+    component: BuzzDetailComponent
   },
   {
     path: "",

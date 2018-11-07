@@ -6,6 +6,7 @@ import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
 import { LocationService } from "../data.location.service";
 import { tap } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-about",
@@ -48,18 +49,19 @@ export class AboutComponent implements OnInit {
   //         comment: "comment comment comment rant rant rant"
   //       }
   //     ]
-  //   },
 
+  //   },
   // ];
   buzzes$: any;
   loggedIn: boolean;
-  loc: any
-  constructor(private dialog: MatDialog,
+  loc: any;
+  constructor(
+    private dialog: MatDialog,
     private auth: AuthUserService,
     private geo: LocationService,
     private data: BuzzesService
+
   ) { }
-  
 
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn();
@@ -87,5 +89,4 @@ export class AboutComponent implements OnInit {
       }
     });
   }
-
 }
