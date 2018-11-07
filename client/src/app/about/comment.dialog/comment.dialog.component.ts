@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { BuzzesService } from 'src/app/data.buzzes.service';
-import { CommentService } from 'src/app/data.comment.service';
-import { DataCommentService } from "../../data.comment.service";
+import { DataCommentService } from 'src/app/data.comment.service';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class CommentDialogComponent implements OnInit {
     private fb: FormBuilder,
     private ref: MatDialogRef<CommentDialogComponent>,
     private Buzz: BuzzesService,
-    private comment: CommentService,
+    private comment: DataCommentService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.id = data.id

@@ -5,12 +5,6 @@ import { tap, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from './user.model';
 
-const url: string = 'http://localhost:3000'
-const httpAuthOptions = {
-  headers: new HttpHeaders({
-
-  })
-}
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +25,10 @@ export class AuthUserService {
   getUser(): Observable<User> {
     console.log('get user start')
     return this.http.get<User>('/user/get')
-    .pipe(tap(auth => console.log(auth)))
+      .pipe(tap(auth => console.log(auth)))
   }
 
   updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
-    let token = localStorage.getItem('sessionToken')
     let user: User = {
       firstName: fn,
       lastName: ln,
@@ -43,8 +36,7 @@ export class AuthUserService {
       userName: username,
       password: password
     }
-    return this.http.put(url, user).pipe(
-      tap(),
+    return this.http.put(`/user/update`, user).pipe(
       catchError(this.handleError('updateUser', []))
     )
   }

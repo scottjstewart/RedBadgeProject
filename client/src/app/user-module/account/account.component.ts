@@ -10,7 +10,7 @@ import { DataCommentService } from "../../data.comment.service";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-  users$: User;
+  users$
   username: string;
   password: string;
   comment: any;
@@ -21,7 +21,7 @@ export class AccountComponent implements OnInit {
     private auth: AuthUserService,
     private data: DataCommentService,
     private buzz: BuzzesService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {

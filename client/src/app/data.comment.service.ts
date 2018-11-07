@@ -20,6 +20,7 @@ export class DataCommentService {
     return this.http.post(`/comment/add/${id}`, { text: comment }).pipe(
       tap(ret => console.log(ret))
     )
+  }
 
   getComments() {
     return this.http.get("/comment/get").pipe(tap(data => console.log(data)));
@@ -40,5 +41,4 @@ export class DataCommentService {
   deleteComment(commentId) {
     return this.http.delete("/comment/delete" + commentId);
   }
- }
 }

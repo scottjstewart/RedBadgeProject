@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user/user.component';
-import { ActivityComponent } from './activity/activity.component';
 import { AccountComponent } from './account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -31,7 +30,6 @@ import { MakebuzzComponent } from './makebuzz/makebuzz.component';
   ],
   declarations: [
     UserComponent,
-    ActivityComponent,
     AccountComponent,
     MakebuzzComponent
   ]
