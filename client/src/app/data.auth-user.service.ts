@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from './user.model';
-import { UserGuard } from './user.guard';
 
 
 @Injectable({
@@ -29,15 +28,8 @@ export class AuthUserService {
       .pipe(tap(auth => console.log(auth)))
   }
 
-  updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
-    let user: User = {
-      firstName: fn,
-      lastName: ln,
-      email: email,
-      userName: username,
-      password: password
-    }
-    return this.http.put(`/user/update`, user).pipe(
+  updateUser(user: User): Observable<any> {
+    return this.http.put('/user/update', user).pipe(
       catchError(this.handleError('updateUser', []))
     )
   }

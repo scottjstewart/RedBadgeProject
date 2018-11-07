@@ -18,7 +18,7 @@ export class UpdateUserComponent implements OnInit {
     private fb: FormBuilder,
     private ref: MatDialogRef<UpdateUserComponent>,
 
-    
+
   ) { }
 
   ngOnInit() {
@@ -30,12 +30,9 @@ export class UpdateUserComponent implements OnInit {
     })
   }
   submit() {
-    let user: User = this.form.value
-    console.log(user)
-    this.auth.updateUser(user).subscribe()
-    this.ref.close(this.form.value)
+    return this.ref.close(this.form.value)
   }
   close() {
-    this.ref.close(this.form.value)
+    this.ref.close()
   }
 }
