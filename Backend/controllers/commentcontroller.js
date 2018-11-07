@@ -6,7 +6,7 @@ let validateSession = require("../middleware/validate-session");
 let express = require("express");
 
 module.exports = (app, db) => {
-  app.get("/user", (req, res) => {
+  app.get("/commnets", (req, res) => {
     sequelize.users
       .findAll({
         include: [

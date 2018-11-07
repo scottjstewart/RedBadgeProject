@@ -36,16 +36,9 @@ export class AuthUserService {
   }
 
   updateUser(user: User): Observable<any> {
-    // let token = localStorage.getItem('sessionToken')
-    // let newUser: User = {
-    //   firstName: user.firstName,
-    //   lastName: user.lastName,
-    //   email: user.email,
-    //   userName: user.userName,
-    // }
     return this.http.put(`/user/update`, user).pipe(
       tap(),
-      catchError(this.handleError('updateUser', []))
+      catchError(this.handleError<any>('updateUser'))
     )
   }
 
