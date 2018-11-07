@@ -14,14 +14,15 @@
     </tr>
   </table>
 
-  <div>
-    <button class="button" (click)="updateUser()">Update your account</button>
-    <button class="button" (click)="delete()">Delete your account</button>
-  </div>
+  <mat-action-list>
+    <button mat-raised-button class="button" (click)="updateUser()" color="accent">Update your account</button>
+    <button mat-raised-button class="button" (click)="delete()" color="accent">Delete your account</button>
+  </mat-action-list>
+
   <h1>Your Activity!</h1>
   <mat-card>
-    <h3>Buzzes</h3>
     <mat-accordion>
+      <h3>Buzzes</h3>
       <mat-expansion-panel *ngFor="let buzz of users$.Buzzes" [id]="buzz.id">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ buzz.title }}</mat-panel-title>
@@ -68,8 +69,8 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card>
-  <h3>Your Comments</h3>
   <mat-card>
+    <h3>Your Comments</h3>
     <mat-list>
       <mat-list-item *ngFor="let comment of users$.Comment">
         <h4 matLine>

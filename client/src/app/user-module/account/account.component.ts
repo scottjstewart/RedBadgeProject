@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   buzzes: any;
   commentId: any;
   buzz: any;
+  loggedIn
 
   constructor(
     private auth: AuthUserService,
@@ -30,6 +31,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {
       this.users$ = auth;
+      this.loggedIn = this.auth.loggedIn()
       // console.log("here is the data", this.users$);
     });
     // let id = this.route.snapshot.paramMap.get("id");
@@ -73,7 +75,9 @@ export class AccountComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateUserComponent, config);
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      this.auth.updateUser(data).subscribe(
+        res => console.log(res)
+      )
     });
   }
 }

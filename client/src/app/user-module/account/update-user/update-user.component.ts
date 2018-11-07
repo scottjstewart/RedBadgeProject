@@ -15,16 +15,22 @@ export class UpdateUserComponent implements OnInit {
   constructor(
     private auth: AuthUserService,
     private fb: FormBuilder,
-    private ref: MatDialogRef<UpdateUserComponent>
-  ) {}
+    private ref: MatDialogRef<UpdateUserComponent>,
+
+
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      userName: new FormControl(),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl()
-    });
+      userName: new FormControl,
+      firstName: new FormControl,
+      lastName: new FormControl,
+      email: new FormControl
+    })
+  }
+  submit() {
+    return this.ref.close(this.form.value)
+
   }
   // submit() {
   //   let user: User = this.form.value
@@ -33,6 +39,6 @@ export class UpdateUserComponent implements OnInit {
   //   this.ref.close(this.form.value)
   // }
   close() {
-    this.ref.close(this.form.value);
+    this.ref.close()
   }
 }

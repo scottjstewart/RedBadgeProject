@@ -1,10 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
-import { Observable, of } from "rxjs";
-import { tap, catchError } from "rxjs/operators";
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { User } from "./user.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt'
+import { User } from './user.model';
 import { UserGuard } from "./user.guard";
+
 
 @Injectable({
   providedIn: "root"
@@ -25,17 +26,12 @@ export class AuthUserService {
       .pipe(tap(auth => console.log(auth)));
   }
 
-  // updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
-  //   let user: User = {
-  //     firstName: fn,
-  //     lastName: ln,
-  //     email: email,
-  //     userName: username,
-  //   }
-  //   return this.http.put(`/user/update`, user).pipe(
-  //     catchError(this.handleError('updateUser', []))
-  //   )
-  // }
+  updateUser(user: User): Observable<any> {
+    return this.http.put('/user/update', user).pipe(
+      catchError(this.handleError('updateUser', []))
+    )
+  }
+
 
   deleteUser(username: string, password: string): Observable<any> {
     return this.http.delete<any>(`/user/delete`).pipe(
