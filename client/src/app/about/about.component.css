@@ -21,12 +21,18 @@
   margin-right: 8px;
 }
 
-.wrapper {
+#wrapper {
   background-image: url("../../assetsmain/nick-fewings-568466-unsplash.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
-  height: 100vh;
-  width: 100vw;
+  border-radius: 0 0 0 0
+}
+#wrapper2{
+  background-color: #3700b3;
+  border-radius: 0 0 0 0
+}
+.buzz{
+  background-color: goldenrod;
+  color: white
 }

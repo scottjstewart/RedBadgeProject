@@ -5,8 +5,10 @@ import { CommentDialogComponent } from "./comment.dialog/comment.dialog.componen
 import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
 import { LocationService } from "../data.location.service";
+import { Buzz } from "../buzz.model";
 import { tap } from "rxjs/operators";
 import { Observable } from "rxjs";
+
 
 @Component({
   selector: "app-about",
@@ -49,10 +51,9 @@ export class AboutComponent implements OnInit {
   //         comment: "comment comment comment rant rant rant"
   //       }
   //     ]
-
   //   },
   // ];
-  buzzes$: any;
+  buzzes$
   loggedIn: boolean;
   loc: any;
   constructor(
@@ -60,15 +61,23 @@ export class AboutComponent implements OnInit {
     private auth: AuthUserService,
     private geo: LocationService,
     private data: BuzzesService
-
-  ) { }
+  ) {
+    data.buzzr$.subscribe(
+      res => {
+        this.buzzes$.push(res)
+      }
+    )
+  }
 
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn();
-    this.loc = this.geo.getLocation();
-    this.data.getBuzzes().subscribe(data => {
-      this.buzzes$ = data
-    })
+    this.loc = this.geo.getLocation()
+    this.data.getBuzzes().subscribe(
+      data => {
+        this.buzzes$ = data
+        console.log(this.buzzes$)
+      }
+    )
   }
 
   openDialog(title: string, original: string) {
@@ -85,7 +94,6 @@ export class AboutComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        console.log("comment", data.comment);
       }
     });
   }

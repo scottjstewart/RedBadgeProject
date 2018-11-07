@@ -20,27 +20,26 @@ export class CommentDialogComponent implements OnInit {
     private fb: FormBuilder,
     private ref: MatDialogRef<CommentDialogComponent>,
     private Buzz: BuzzesService,
-    private datas: DataCommentService,
+    private comment: DataCommentService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
+    this.id = data.id;
     this.title = data.title;
     this.original = data.original;
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      comment: new FormControl()
+      comment: new FormControl(),
+      id: new FormControl()
     });
   }
 
-  submit(comment: string) {
-    console.log("dialog commnet", comment);
-    let buzz = this.form.value;
-    console.log(buzz);
-    this.Buzz.makeBuzz(buzz).subscribe();
+  submit() {
+    this.comment
+      .addComment(this.form.controls.comment.value, this.id)
+      .subscribe();
     this.ref.close(this.form.value);
-    this.datas.firstClick();
-    // this.datas.createComment(comment);
   }
   close() {
     this.ref.close();

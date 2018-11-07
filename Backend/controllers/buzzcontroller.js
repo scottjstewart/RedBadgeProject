@@ -1,9 +1,9 @@
 let express = require('express');
 let db = require('../db')
-let buzz = db.sequelize.import('../models/buzz')
-let user = db.users
+let buzz = require('../models/buzz')
+let user = require('../models/user')
+let comment = require('../models/comment')
 let validateSession = require('../middleware/validate-session')
-
 
 module.exports = (app, db) => {
   app.get('/buzz/user', (req, res) => {
@@ -13,7 +13,7 @@ module.exports = (app, db) => {
           model: db.buzzs,
           include: [
             {
-              model: db.comment
+              model: db.comments
             }
           ]
         }
@@ -67,8 +67,22 @@ module.exports = (app, db) => {
     });
   });
   app.get('/buzz/get', (req, res) => {
-    buzz.findAll()
-      .then(buzz => res.status(200).json(buzz))
+    buzz.findAll({
+      include: [
+        {
+          model: comment,
+          as: 'Comments',
+          include: [
+            {
+              model: user,
+              as: 'Commenter',
+              attributes: ['userName']
+            }
+          ]
+        }
+      ]
+    })
+      .then(buzz => res.status(200).send(buzz))
       .catch(err => res.status(500).json({ error: err }))
   })
 
@@ -78,6 +92,36 @@ module.exports = (app, db) => {
       .catch(err => res.status(500).json({ error: err }))
   })
 
+  app.get('/buzz/byId/:id', (req, res) => {
+    buzz.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: user,
+          as: 'Buzzer',
+          attributes: ['userName']
+        },
+        {
+          model: comment,
+          as: 'Comments',
+          include: [
+            {
+              model: user,
+              as: 'Commenter',
+              attributes: ['userName']
+            }
+          ]
+        }
+      ]
+    })
+      .then(buzz => {
+        if (buzz) {
+          res.status(200).send(buzz)
+        }
+      }
+      )
+  })
+
   app.post('/buzz/makeBuzz', validateSession, (req, res) => {
     buzz.create({
       userId: req.user.id,
@@ -85,13 +129,12 @@ module.exports = (app, db) => {
       price: req.body.price,
       funFactor: req.body.funFactor,
       details: req.body.details,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude
     }).then(
       function createSuccess(buzz) {
-        res.json({
-          buzz: buzz,
-          message: 'it worked',
-
-        })
+        buzz.setBuzzer(req.user.id)
+        res.status(200).send(buzz)
       },
       function createError(err) {
         res.send(500, err.message)
@@ -126,8 +169,12 @@ module.exports = (app, db) => {
     })
   })
 
-  app.post('/buzz/:buzz/comment/:userid', (req, res) => {
-
-  })
+  // app.post('/buzz/comment/:buzzId', (req, res) => {
+  //   buzz.findOne({ where: { id: req.params.buzzId } }).then(
+  //     buz => {
+  //       buz.setComments()
+  //     }
+  //   )
+  // })
 
 }

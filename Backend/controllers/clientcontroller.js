@@ -1,27 +1,27 @@
 let express = require('express');
 let router = express.Router();
 let db = require('../db')
-let Client = db.sequelize.import('../models/client')
-let User = db.sequelize.import('../models/user')
+let Client = require('../models/client')
+let User = require('../models/user')
 let validateSession = require('../middleware/validate-session')
 
 
 router.get('/', (req, res) => {
     Client.findAll()
         .then(client => res.status(200).json(client))
-        .catch(err => res.status(500).json({error: err}))
+        .catch(err => res.status(500).json({ error: err }))
 })
 
 router.get('/own', (req, res) => {
-    Client.findAll({where: {owner: req.user.id} } )
+    Client.findAll({ where: { owner: req.user.id } })
         .then(client => res.status(200).json(client))
-        .catch(err => res.status(500).json({error: err}))
+        .catch(err => res.status(500).json({ error: err }))
 })
 
 router.get('./get', (req, res) => {
     User.findAll()
         .then(user => res.status(200).json(user))
-        .catch(err => res.status(500).json({error: err}))
+        .catch(err => res.status(500).json({ error: err }))
 })
 
 router.post('/create', (req, res) => {
@@ -32,7 +32,7 @@ router.post('/create', (req, res) => {
             deal: req.body.deal,
             details: req.body.details,
             owner: req.user.id
-        }). then (
+        }).then(
             function creatSuccess(client) {
                 res.json({
                     client: client,
@@ -46,13 +46,13 @@ router.post('/create', (req, res) => {
 })
 
 router.put('/update/:id', (req, res) => {
-    Client.findOne({where: { id: req.params.id } } ).then(
+    Client.findOne({ where: { id: req.params.id } }).then(
         client => {
-            if(client.owner === req.user.id){
-                Client.update(req.body, {where: { id: req.params.id}})
-                    .then(client => res.status (200).json(client))
+            if (client.owner === req.user.id) {
+                Client.update(req.body, { where: { id: req.params.id } })
+                    .then(client => res.status(200).json(client))
                     .catch(err => res.json(req.error))
-            } else{
+            } else {
                 res.status(500).json({
                     message: `user does not own ${req.params.id}`
                 })
@@ -61,11 +61,11 @@ router.put('/update/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-    Client.findOne({where: {id:  req.params.id } } ).then(client => {
-        if(client.owner === req.user.id){
-            Client.destroy({where: {id: req.params.id}})
-            .then(client => res.status (200).json(client))
-            .catch(err => res.json(req.error))
+    Client.findOne({ where: { id: req.params.id } }).then(client => {
+        if (client.owner === req.user.id) {
+            Client.destroy({ where: { id: req.params.id } })
+                .then(client => res.status(200).json(client))
+                .catch(err => res.json(req.error))
         } else {
             res.status(500).json({
                 message: `Nope!`

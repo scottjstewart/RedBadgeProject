@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user/user.component';
 import { ActivityComponent } from './activity/activity.component';
@@ -16,6 +15,7 @@ import { MatDialogModule } from '@angular/material';
 import { MakebuzzComponent } from './makebuzz/makebuzz.component';
 import { UpdateUserComponent } from './account/update-user/update-user.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +30,7 @@ import { UpdateUserComponent } from './account/update-user/update-user.component
     ReactiveFormsModule,
     MatDialogModule
   ],
+  
   declarations: [
     UserComponent,
     ActivityComponent,
@@ -38,4 +39,4 @@ import { UpdateUserComponent } from './account/update-user/update-user.component
     UpdateUserComponent
   ]
 })
-export class UserModule { }
+export class UserModule {}

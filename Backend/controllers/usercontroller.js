@@ -1,7 +1,7 @@
 let bcrypt = require("bcryptjs");
 let jwt = require("jsonwebtoken");
 let db = require("../db");
-let user = db.sequelize.import("../models/user");
+let user = require('../models/user')
 let validateSession = require("../middleware/validate-session");
 
 module.exports = (app, db) => {
@@ -106,29 +106,29 @@ module.exports = (app, db) => {
         password: bcrypt.hashSync(req.body.password, 10),
         userName: req.body.userName
       })
-      .then(
-        (createSuccess = newUser => {
-          let token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
-            expiresIn: 60 * 60 * 24
-          });
-          console.log(token);
-          let resUser = {
-            userName: newUser.userName,
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            email: newUser.email,
-            id: newUser.id
-          };
-          res.json({
-            user: resUser,
-            auth: true,
-            message: "User successfuly created",
-            sessionToken: token
-          });
-        }),
-        (createError = err => res.status(500).send(err.message))
+      .then(newUser => {
+        let token = jwt.sign(
+          { id: newUser.id },
+          process.env.JWT_SECRET,
+          { expiresIn: 60 * 60 * 24 }
+        );
+        let resUser = {
+          userName: newUser.userName,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          id: newUser.id
+        };
+        res.json({
+          user: resUser,
+          auth: true,
+          message: "User successfuly created",
+          sessionToken: token
+        });
+      },
+        err => res.status(500).send(err.message)
       );
-  });
+  })
 
   app.post("/user/login", (req, res) => {
     user.findOne({ where: { userName: req.body.userName } }).then(
