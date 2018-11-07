@@ -209,7 +209,7 @@ module.exports = (app, db) => {
       };
       if (!req.errors) {
         user
-          .update(nUser, { where: { id: user.id } })
+          .update(nUser)
           .then(userN => res.status(200).json(userN))
           .catch(error => res.json(error));
       } else {

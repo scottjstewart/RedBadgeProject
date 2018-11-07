@@ -14,6 +14,7 @@ import { MaterialModule } from '../material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
 import { MakebuzzComponent } from './makebuzz/makebuzz.component';
+import { UpdateUserComponent } from './account/update-user/update-user.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { MakebuzzComponent } from './makebuzz/makebuzz.component';
     UserComponent,
     ActivityComponent,
     AccountComponent,
-    MakebuzzComponent
+    MakebuzzComponent,
+    UpdateUserComponent
   ]
 })
 export class UserModule { }
