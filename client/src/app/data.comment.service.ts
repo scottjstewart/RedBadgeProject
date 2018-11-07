@@ -6,36 +6,29 @@ import { AuthUserService } from "./data.auth-user.service";
 @Injectable({
   providedIn: "root"
 })
-
 export class DataCommentService {
   newComment: Object;
-
 
   constructor(private http: HttpClient, private auth: AuthUserService) {}
 
   getComments() {
-    return this.http
-      .get("http://localhost:3000/comment/get")
-      .pipe(tap(data => console.log(data)));
+    return this.http.get("/comment/get").pipe(tap(data => console.log(data)));
   }
 
   getOwnComment(userId, commentId) {
-    return this.http.get("http://localhost:3000/comment/own" + commentId);
+    return this.http.get("/comment/own" + commentId);
   }
 
   createComment(comment) {
-    return this.http.post("http://localhost:3000/comment/create", comment);
+    return this.http.post("/comment/create", comment);
   }
 
   updateComment(commentId, newComment) {
-    return this.http.put(
-      "http://localhost:3000/comment/update" + commentId,
-      newComment
-    );
+    return this.http.put("/comment/update" + commentId, newComment);
   }
 
   deleteComment(commentId) {
-    return this.http.delete("http://localhost:3000/comment/delete" + commentId);
+    return this.http.delete("/comment/delete" + commentId);
   }
 
   firstClick() {
