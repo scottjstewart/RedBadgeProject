@@ -13,9 +13,9 @@ export class DataCommentService {
   constructor(private http: HttpClient, private auth: AuthUserService) {}
 
   addComment(comment: string, id: string | number): Observable<any> {
-    return this.http.post(`/comment/add/${id}`, { text: comment }).pipe(
-      tap(ret => console.log(ret))
-    )
+    return this.http
+      .post(`/comment/add/${id}`, { text: comment })
+      .pipe(tap(ret => console.log(ret)));
   }
 
   getComments() {
@@ -34,7 +34,7 @@ export class DataCommentService {
     return this.http.put("/comment/update" + commentId, newComment);
   }
 
-  deleteComment(commentId) {
-    return this.http.delete("/comment/delete" + commentId);
+  deleteComment(commentId): Observable<any> {
+    return this.http.delete("/comment/delete/" + commentId);
   }
 }
