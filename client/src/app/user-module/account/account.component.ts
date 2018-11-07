@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
   comment: any;
   buzzes: any;
   commentId: any;
-  buzz: any;
+  // buzz: any;
 
   constructor(
     private auth: AuthUserService,
