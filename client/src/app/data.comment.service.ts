@@ -15,7 +15,7 @@ export class DataCommentService {
     return this.http.get("/comment/get").pipe(tap(data => console.log(data)));
   }
 
-  getOwnComment(userId, commentId) {
+  getOwnComment(commentId) {
     return this.http.get("/comment/own" + commentId);
   }
 
