@@ -4,6 +4,7 @@ import { AuthUserService } from "src/app/data.auth-user.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { User } from "src/app/user.model";
 
+
 @Component({
   selector: "app-update-user",
   templateUrl: "./update-user.component.html",
@@ -17,7 +18,6 @@ export class UpdateUserComponent implements OnInit {
     private fb: FormBuilder,
     private ref: MatDialogRef<UpdateUserComponent>,
 
-
   ) { }
 
   ngOnInit() {
@@ -30,7 +30,6 @@ export class UpdateUserComponent implements OnInit {
   }
   submit() {
     return this.ref.close(this.form.value)
-
   }
   // submit() {
   //   let user: User = this.form.value
