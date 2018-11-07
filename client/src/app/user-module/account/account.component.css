@@ -17,7 +17,9 @@
 }
 
 .button {
-  height: 24px;
-  background-color: purple;
+  height: 32px;
+  background-image: linear-gradient(purple, blue);
   color: white;
+  margin: 32px;
+  border-radius: 5px;
 }
