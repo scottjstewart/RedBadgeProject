@@ -12,7 +12,7 @@ import { UpdateUserComponent } from "./update-user/update-user.component";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-  users$
+  users$;
   username: string;
   password: string;
   comment: any;
@@ -24,9 +24,9 @@ export class AccountComponent implements OnInit {
   constructor(
     private auth: AuthUserService,
     private data: DataCommentService,
-    // private buzz: BuzzesService,
+    private buzzs: BuzzesService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {
@@ -48,6 +48,22 @@ export class AccountComponent implements OnInit {
   }
   delete(): void {
     this.auth.deleteUser(this.username, this.password).subscribe();
+  }
+
+  deleteBuzz(id: any): void {
+    this.buzzs.deleteBuzz(id).subscribe(succ => {
+      this.auth.getUser().subscribe(auth => {
+        this.users$ = auth;
+      });
+    });
+  }
+
+  deleteComment(commentId: any): void {
+    this.data.deleteComment(commentId).subscribe(succ => {
+      this.auth.getUser().subscribe(auth => {
+        this.users$ = auth;
+      });
+    });
   }
 
   updateUser() {
