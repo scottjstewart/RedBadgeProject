@@ -10,6 +10,8 @@ import { User } from '../../user.model';
 export class AccountComponent implements OnInit {
 
   users$: User
+  username: string
+  password: string
 
   constructor(
     private auth: AuthUserService
@@ -20,6 +22,9 @@ export class AccountComponent implements OnInit {
       this.users$ = auth
       console.log("here is the data", this.users$)
     })
+  }
+  delete(): void {
+    this.auth.deleteUser(this.username, this.password).subscribe();
   }
 
 }

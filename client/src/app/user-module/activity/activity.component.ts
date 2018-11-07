@@ -18,7 +18,7 @@ export class ActivityComponent implements OnInit {
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn()
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    console.log(this.currentUser.firstName)
+    console.log('first name', this.currentUser.firstName)
   }
 
 }
