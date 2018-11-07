@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from './user.model';
+import { UserGuard } from './user.guard';
 
 
 @Injectable({

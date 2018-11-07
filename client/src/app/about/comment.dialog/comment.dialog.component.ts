@@ -24,21 +24,23 @@ export class CommentDialogComponent implements OnInit {
     private comment: DataCommentService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    this.id = data.id
-    this.title = data.title
-    this.original = data.original
+    this.id = data.id;
+    this.title = data.title;
+    this.original = data.original;
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      comment: new FormControl,
-      id: new FormControl
-    })
+      comment: new FormControl(),
+      id: new FormControl()
+    });
   }
 
   submit() {
-    this.comment.addComment(this.form.controls.comment.value, this.id).subscribe()
-    this.ref.close(this.form.value)
+    this.comment
+      .addComment(this.form.controls.comment.value, this.id)
+      .subscribe();
+    this.ref.close(this.form.value);
   }
   close() {
     this.ref.close();

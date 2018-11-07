@@ -8,7 +8,9 @@ const Client = require("./controllers/clientcontroller");
 const Com = require("./controllers/commentcontroller");
 const router = require("./controllers/router");
 
+
 db.sync({ force: false });
+
 
 app.use(bodyParser.json());
 app.use(require("./middleware/header"));
