@@ -10,14 +10,12 @@ import { DataCommentService } from "../../data.comment.service";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-
-  users$: User
-  username: string
-  password: string
+  users$: User;
+  username: string;
+  password: string;
   comment: any;
   buzzes: any;
   commentId: any;
-
 
   constructor(
     private auth: AuthUserService,
@@ -30,9 +28,9 @@ export class AccountComponent implements OnInit {
       this.users$ = auth;
       console.log("here is the data", this.users$);
     });
-    this.buzz.getBuzzes().subscribe(buzz => {
-      this.buzzes = buzz;
-    });
+    // this.buzz.getBuzz(buzzId).subscribe(buzz => {
+    //   this.buzzes = buzz;
+    // });
     // this.data.getOwnComment(this.users$.comment).subscribe(data => {
     //   this.comment = data;
     // });
@@ -40,5 +38,4 @@ export class AccountComponent implements OnInit {
   delete(): void {
     this.auth.deleteUser(this.username, this.password).subscribe();
   }
-
 }
