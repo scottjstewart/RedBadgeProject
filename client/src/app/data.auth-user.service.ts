@@ -28,6 +28,11 @@ export class AuthUserService {
       return of(result as T)
     }
   }
+  getUser(): Observable<User> {
+    console.log('get user start')
+    return this.http.get<User>('/user/get')
+    .pipe(tap(auth => console.log(auth)))
+  }
 
   updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
     let token = localStorage.getItem('sessionToken')
@@ -45,7 +50,7 @@ export class AuthUserService {
   }
 
   deleteUser(username: string, password: string): Observable<any> {
-    return this.http.delete<any>(`${url}/user/delete`)
+    return this.http.delete<any>(`/user/delete`)
       .pipe(
         tap(),
         catchError(this.handleError('deletUser', []))

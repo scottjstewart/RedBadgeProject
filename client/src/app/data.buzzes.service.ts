@@ -5,6 +5,8 @@ import { catchError, tap } from "rxjs/operators";
 import { AuthUserService } from "./data.auth-user.service";
 import { Buzz } from "./buzz.model";
 import { errorHandler } from "@angular/platform-browser/src/browser";
+import { tap } from "rxjs/operators";
+
 
 @Injectable({
   providedIn: "root"
@@ -62,5 +64,4 @@ export class BuzzesService {
       catchError(this.handleError("updateBuzz", []))
     )
   }
-
 }

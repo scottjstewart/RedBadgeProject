@@ -6,6 +6,7 @@ import { BuzzesService } from 'src/app/data.buzzes.service';
 import { Buzz } from 'src/app/buzz.model';
 import { LocationService } from 'src/app/data.location.service';
 
+
 @Component({
   selector: 'app-makebuzz',
   templateUrl: './makebuzz.component.html',
@@ -15,12 +16,14 @@ export class MakebuzzComponent implements OnInit {
   user
   form: FormGroup
   loc
+  
   constructor(
     private Buzz: BuzzesService,
     private fb: FormBuilder,
     private auth: AuthUserService,
     private ref: MatDialogRef<MakebuzzComponent>,
     private geo: LocationService,
+    
     @Inject(MAT_DIALOG_DATA) data
   ) {
     if (data) {

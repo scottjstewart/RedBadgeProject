@@ -4,17 +4,19 @@ import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { BuzzesService } from 'src/app/data.buzzes.service';
 import { CommentService } from 'src/app/data.comment.service';
+import { DataCommentService } from "../../data.comment.service";
+
 
 @Component({
-  selector: 'app-comment.dialog',
-  templateUrl: './comment.dialog.component.html',
-  styleUrls: ['./comment.dialog.component.css']
+  selector: "app-comment.dialog",
+  templateUrl: "./comment.dialog.component.html",
+  styleUrls: ["./comment.dialog.component.css"]
 })
 export class CommentDialogComponent implements OnInit {
-  id: number
-  title: string
-  form: FormGroup
-  original: string
+  id: number;
+  title: string;
+  form: FormGroup;
+  original: string;
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +41,7 @@ export class CommentDialogComponent implements OnInit {
     this.comment.addComment(this.form.controls.comment.value, this.id).subscribe()
     this.ref.close(this.form.value)
   }
-
   close() {
-    this.ref.close()
+    this.ref.close();
   }
-
 }

@@ -6,6 +6,9 @@ import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
 import { LocationService } from "../data.location.service";
 import { Buzz } from "../buzz.model";
+import { tap } from "rxjs/operators";
+import { Observable } from "rxjs";
+
 
 @Component({
   selector: "app-about",
@@ -49,12 +52,12 @@ export class AboutComponent implements OnInit {
   //       }
   //     ]
   //   },
-
   // ];
   buzzes$
   loggedIn: boolean;
-  loc: any
-  constructor(private dialog: MatDialog,
+  loc: any;
+  constructor(
+    private dialog: MatDialog,
     private auth: AuthUserService,
     private geo: LocationService,
     private data: BuzzesService
@@ -94,5 +97,4 @@ export class AboutComponent implements OnInit {
       }
     });
   }
-
 }

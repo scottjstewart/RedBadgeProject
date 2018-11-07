@@ -167,8 +167,8 @@ module.exports = (app, db) => {
 
   app.get("/user/get", validateSession, (req, res) => {
     user
-      .findAll()
-      .then(user => res.status(200).json(user))
+      .findOne({where:{id: req.user.id}})
+      .then(user => res.status(200).send(user))
       .catch(err => res.status(500).json({ error: err }));
   });
 
