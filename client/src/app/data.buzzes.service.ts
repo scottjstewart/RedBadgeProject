@@ -16,4 +16,8 @@ export class BuzzesService {
   getBuzz(buzzId) {
     return this.http.get("/buzz/own" + buzzId);
   }
+
+  makeBuzz(buzz) {
+    return this.http.post("/buzz/create", buzz);
+  }
 }
