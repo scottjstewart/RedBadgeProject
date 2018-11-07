@@ -10,7 +10,9 @@ export class BuzzesService {
   constructor(private http: HttpClient, private auth: AuthUserService) {}
 
   getBuzzes() {
-    return this.http.get("/buzz/get").pipe(tap(data => console.log(data)));
+    return this.http
+      .get("/buzz/get")
+      .pipe(tap(data => console.log(data)));
   }
 
   getBuzz(buzzId) {

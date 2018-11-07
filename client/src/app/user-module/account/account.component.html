@@ -1,3 +1,20 @@
-<p>
-  account works!
-</p>
+<mat-card class="wrapper">
+    <table class='tble'>
+      <tr>
+        <th>User Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+      <tr>
+          <td>{{ users$.userName }}</td>
+          <td>{{ users$.firstName }}</td>
+          <td>{{ users$.lastName }}</td>
+          <td>{{ users$.email }}</td>
+      </tr>
+    </table>
+      <div>
+        <button>Update your account</button>
+        <button>Delete your account</button>
+      </div>
+</mat-card>

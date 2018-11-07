@@ -49,7 +49,8 @@ export class AboutComponent implements OnInit {
   //         comment: "comment comment comment rant rant rant"
   //       }
   //     ]
-  //   }
+
+  //   },
   // ];
   buzzes$: any;
   loggedIn: boolean;
@@ -59,12 +60,15 @@ export class AboutComponent implements OnInit {
     private auth: AuthUserService,
     private geo: LocationService,
     private data: BuzzesService
-  ) {}
+
+  ) { }
 
   ngOnInit() {
     this.loggedIn = this.auth.loggedIn();
     this.loc = this.geo.getLocation();
-    this.data.getBuzzes().subscribe(data => (this.buzzes$ = data));
+    this.data.getBuzzes().subscribe(data => {
+      this.buzzes$ = data
+    })
   }
 
   openDialog(title: string, original: string) {

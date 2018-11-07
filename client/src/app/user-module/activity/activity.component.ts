@@ -7,10 +7,10 @@ import { AuthUserService } from 'src/app/data.auth-user.service';
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
-  loggedIn: boolean
-  buzzes: []
-  comments: []
-  currentUser
+  loggedIn: boolean;
+  buzzes: any;
+  comments: any;
+  currentUser;
   constructor(
     private auth: AuthUserService
   ) { }

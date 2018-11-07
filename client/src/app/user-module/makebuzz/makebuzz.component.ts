@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BuzzesService } from 'src/app/data.buzzes.service';
 import { Buzz } from 'src/app/buzz.model';
 
+
 @Component({
   selector: 'app-makebuzz',
   templateUrl: './makebuzz.component.html',
@@ -13,11 +14,13 @@ import { Buzz } from 'src/app/buzz.model';
 export class MakebuzzComponent implements OnInit {
   user
   form: FormGroup
+
   constructor(
     private Buzz: BuzzesService,
     private fb: FormBuilder,
     private auth: AuthUserService,
     private ref: MatDialogRef<MakebuzzComponent>,
+
     @Inject(MAT_DIALOG_DATA) data
   ) {
     if (data) {
