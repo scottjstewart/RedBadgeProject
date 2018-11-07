@@ -8,6 +8,8 @@ const sequelize = new Sequelize(process.env.NAME, 'postgres', process.env.PASS, 
     dialect: 'postgres'
 })
 
+module.exports = sequelize
+
 sequelize.authenticate().then(
     function () {
         console.log('Conected to redbadge database');
@@ -18,24 +20,19 @@ sequelize.authenticate().then(
 );
 
 
+const user = require('./models/user.js')
+const buzz = require('./models/buzz.js')
+const comment = require('./models/comment.js')
 
-const db = {};
+//user associations
+user.hasMany(buzz, { as: 'Buzzes' })
+user.hasMany(comment, { as: 'Comment' })
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+//buzz associations
+buzz.hasMany(comment, { as: 'Comments' })
+buzz.belongsTo(user, { as: 'Buzzer' })
 
-db.users = require('./models/user.js')(sequelize, Sequelize);
-db.comments = require('./models/comment.js')(sequelize, Sequelize);
-db.buzzs = require('./models/buzz.js')(sequelize, Sequelize);
+//comment associations
+// comment.belongsTo(buzz, { as: 'Buzz' })
+comment.belongsTo(user, { as: 'Commenter' })
 
-//Relations
-db.comments.belongsTo(db.buzzs, { through: 'buzzComments' });
-db.comments.belongsTo(db.users);
-db.buzzs.belongsToMany(db.comments, { through: 'buzzComments' });
-db.buzzs.belongsTo(db.users, { as: 'Buzzer' });
-db.users.belongsToMany(db.buzzs, { through: 'userBuzzes' });
-db.users.belongsToMany(db.comments, { through: 'buzzComments' });
-
-
-
-module.exports = db;

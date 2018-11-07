@@ -4,6 +4,7 @@ import { AuthUserService } from 'src/app/data.auth-user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BuzzesService } from 'src/app/data.buzzes.service';
 import { Buzz } from 'src/app/buzz.model';
+import { LocationService } from 'src/app/data.location.service';
 
 @Component({
   selector: 'app-makebuzz',
@@ -13,11 +14,13 @@ import { Buzz } from 'src/app/buzz.model';
 export class MakebuzzComponent implements OnInit {
   user
   form: FormGroup
+  loc
   constructor(
     private Buzz: BuzzesService,
     private fb: FormBuilder,
     private auth: AuthUserService,
     private ref: MatDialogRef<MakebuzzComponent>,
+    private geo: LocationService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     if (data) {
@@ -35,14 +38,20 @@ export class MakebuzzComponent implements OnInit {
       funFactor: new FormControl,
       details: new FormControl
     })
+    this.geo.getLocation().subscribe(
+      res => {
+        this.loc = res
+      }
+
+    )
   }
 
   submit(comment: string) {
-    // console.log('buzz', this.form.value)
     let buzz: Buzz = this.form.value
-    this.Buzz.makeBuzz(buzz).subscribe(
-      res => console.log('res', res)
-    )
+    buzz.longitude = this.loc.coords.longitude
+    buzz.latitude = this.loc.coords.latitude
+
+    this.Buzz.makeBuzz(buzz).subscribe()
     this.ref.close(this.form.value)
   }
 

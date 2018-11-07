@@ -27,6 +27,20 @@
       Contact
     </a>
   </li>
+  <li>
+    <a [matMenuTriggerFor]="menu">
+      <span>
+        <sub>
+          <mat-icon>person</mat-icon>
+        </sub>
+      </span>
+      Account
+    </a>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/user/activity">My Activity</a>
+      <a mat-menu-item routerLink="/user/account">My Account</a>
+    </mat-menu>
+  </li>
   <div class="logo">
     <img src="">
   </div>

@@ -7,20 +7,19 @@ import { Observable, Observer } from 'rxjs';
 export class LocationService {
   constructor() { }
 
-  getLocation(): Observable<any> {
-    let location: any
-    if (window.navigator.geolocation) {
-      window.navigator.geolocation.getCurrentPosition(
-        position => {
-          console.log(position)
-          location = position
+  getLocation(): Observable<Position> {
+    return Observable.create((observer: Observer<Position>) => {
+      navigator.geolocation.getCurrentPosition(
+        (position: Position) => {
+          observer.next(position);
+          observer.complete();
         },
-        err => {
-          console.log(err)
+        (error: PositionError) => {
+          console.log('Geolocation service: ' + error.message);
+          observer.error(error);
         }
-      )
-    }
-    return location
+      );
+    });
   }
 
   //not working yet: remove private marker when functional

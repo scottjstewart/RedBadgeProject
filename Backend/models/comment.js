@@ -1,19 +1,16 @@
-module.exports = (sequelize, DataTypes) => {
-    const Com = sequelize.define('comment', {
-        text: {
-            type: DataTypes.STRING
-        },
-        upVote: {
-            type: DataTypes.INTEGER
-        },
-        userId: {
-            type: DataTypes.UUID,
-            allowNull: false
-        },
-        commenter: {
-            type: DataTypes.STRING
-        }
-    });
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-    return Com;
-}
+
+const Comment = db.define('comment', {
+    text: {
+        type: Sequelize.STRING
+    },
+    upVote: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    }
+});
+
+module.exports = Comment

@@ -3,10 +3,11 @@ export class Buzz {
     price: number;
     funFactor: string;
     details: string;
-    upVote?: number;
     longitude: number;
     latitude: number;
+    upVote?: number;
     user?: string;
     id?: number;
-
+    comments?: [];
+    buzzer: {}
 }

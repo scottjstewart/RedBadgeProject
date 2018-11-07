@@ -1,23 +1,30 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable, of, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, tap } from "rxjs/operators";
 import { AuthUserService } from "./data.auth-user.service";
 import { Buzz } from "./buzz.model";
-
-
-const url = "http://localhost:3000/buzz";
+import { errorHandler } from "@angular/platform-browser/src/browser";
 
 @Injectable({
   providedIn: "root"
 })
 export class BuzzesService {
-  constructor(private http: HttpClient, private auth: AuthUserService) {}
+  private buzzr = new ReplaySubject<Buzz>()
 
-  getBuzzes() {
-    return this.http
-      .get("http://localhost:3000/buzz/get")
-      .pipe(tap(data => console.log(data)));
+  buzzr$ = this.buzzr.asObservable()
+
+  constructor(private http: HttpClient, private auth: AuthUserService) { }
+
+  getBuzzes(): Observable<any> {
+    return this.http.get<any>('/buzz/get').pipe(
+      tap(res => console.log(res)),
+      catchError(this.handleError('getBuzzes', []))
+    )
+  }
+
+  getBuzzById(id: string | number): Observable<Buzz> {
+    return this.http.get<Buzz>(`/buzz/byId/${id}`)
   }
 
   getBuzz(buzzId) {
@@ -31,23 +38,23 @@ export class BuzzesService {
     }
   }
 
-  makeBuzz(buzz: Buzz): Observable<any> {
-    return this.http.post<Buzz>(`/buzz/makeBuzz`, buzz).pipe(
-      catchError(this.handleError("makeBuzz", []))
-  )
-}
+  makeBuzz(buzz: Buzz): Observable<Buzz> {
+    return this.http.post<Buzz>('/buzz/makeBuzz', buzz).pipe(
+      tap(res => this.buzzr.next(res)),
+    )
+  }
 
-  deleteBuzz(buzz : Buzz | number): Observable<any> {
+  deleteBuzz(buzz: Buzz | number): Observable<any> {
     const id = typeof buzz === 'number' ? buzz : buzz.id
     return this.http.delete<Buzz>(`/buzz/delete/${id}`).pipe(
       catchError(this.handleError("deleteBuzz", []))
     )
   }
 
-  updateBuzz(buzz : Buzz | number): Observable<any> {
+  updateBuzz(buzz: Buzz | number): Observable<any> {
     const id = typeof buzz === 'number' ? buzz : buzz.id
     const options = {
-      headers: new HttpHeaders ({
+      headers: new HttpHeaders({
         'Content-Type': 'applicatoin/json'
       })
     }
@@ -55,5 +62,5 @@ export class BuzzesService {
       catchError(this.handleError("updateBuzz", []))
     )
   }
-    
+
 }

@@ -47,7 +47,7 @@ export class SidebarComponent implements OnInit {
     const dialogRef = this.dialog.open(MakebuzzComponent, config);
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data)
+
     });
   }
 
