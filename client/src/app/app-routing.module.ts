@@ -28,7 +28,7 @@ const routes: Routes = [
     component: AboutComponent,
   },
   {
-    path: 'buzz/detail',
+    path: 'buzz/detail/:id',
     component: BuzzDetailComponent
   },
   {

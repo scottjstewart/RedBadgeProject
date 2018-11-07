@@ -22,7 +22,6 @@ import { AboutComponent } from './about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './not-found/not-found.component'
 import { JwtModule } from "@auth0/angular-jwt";
-import { BuzzcommentsComponent } from './buzzcomments/buzzcomments.component';
 import { BuzzDetailComponent } from './buzz-detail/buzz-detail.component';
 import { CommentDialogComponent } from "./about/comment.dialog/comment.dialog.component";
 import { MatDialogModule } from "@angular/material";
@@ -45,7 +44,6 @@ export function tokenGetter() {
     ContactComponent,
     AboutComponent,
     NotFoundComponent,
-    BuzzcommentsComponent,
     BuzzDetailComponent,
     CommentDialogComponent,
     MyAccountComponent,

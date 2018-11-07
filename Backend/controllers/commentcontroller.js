@@ -1,5 +1,7 @@
 let db = require("../db");
-let comment = db.sequelize.import("../models/comment");
+let comment = require("../models/comment");
+let buzz = require("../models/buzz")
+let user = require("../models/user")
 let validateSession = require("../middleware/validate-session");
 let express = require("express");
 
@@ -80,25 +82,25 @@ module.exports = (app, db) => {
       .catch(err => res.status(500).json({ error: err }));
   });
 
-  app.post("/comment/create", validateSession, (req, res) => {
-    comment
-      .create({
-        // buzzID: req.params.id,
-        commenter: req.user.userName,
-        userId: req.user.id,
-        text: req.body.text
-      })
+  app.post("/comment/add/:buzzId", validateSession, (req, res) => {
+    comment.create(
+      { text: req.body.text }
+    )
       .then(
-        function createSuccess(comment) {
-          res.json({
-            comment: comment,
-            message: "it worked"
-          });
-        },
-        function createError(err) {
-          res.send(500, err.message);
+        comm => {
+          comm.setCommenter(req.user.id)
+          user.findOne({ where: { id: req.user.id } }).then(
+            usr => {
+              usr.addComment(comm)
+            }
+          )
+          buzz.findById(req.params.buzzId).then(
+            buz => {
+              buz.addComments(comm)
+            }
+          )
         }
-      );
+      )
   });
 
   app.put("/comment/update/:id", validateSession, (req, res) => {
