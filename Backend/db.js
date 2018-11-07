@@ -33,6 +33,6 @@ buzz.hasMany(comment, { as: 'Comments' })
 buzz.belongsTo(user, { as: 'Buzzer' })
 
 //comment associations
-// comment.belongsTo(buzz, { as: 'Buzz' })
+comment.belongsTo(buzz, { as: 'Buzz' })
 comment.belongsTo(user, { as: 'Commenter' })
 

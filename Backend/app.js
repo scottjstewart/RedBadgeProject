@@ -8,7 +8,9 @@ const Client = require("./controllers/clientcontroller");
 const Com = require("./controllers/commentcontroller");
 const router = require("./controllers/router");
 
-db.sync({});
+
+db.sync({ force: false });
+
 
 app.use(bodyParser.json());
 app.use(require("./middleware/header"));
@@ -25,10 +27,10 @@ app.use(require("./middleware/validate-session"));
 
 app.use("/client", Client);
 
-app.use("/api/test", function(req, res) {
+app.use("/api/test", function (req, res) {
   res.send("Looks like this is working...because we are awesome");
 });
 
-app.listen(3000, function() {
+app.listen(3000, function () {
   console.log("app listening on port 3000");
 });

@@ -61,7 +61,8 @@
         </mat-list-item>
       </mat-list>
       <mat-action-row>
-        <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.title, buzz.description)" color="accent">Comment</button>
+        <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.title, buzz.description, buzz.id)"
+          color="accent">Comment</button>
         <button mat-raised-button color="accent" routerLink="/buzz/detail/{{buzz.id}}">Go to Buzz Detail</button>
       </mat-action-row>
     </mat-expansion-panel>

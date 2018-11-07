@@ -13,7 +13,7 @@ import { UpdateUserComponent } from "./update-user/update-user.component";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-  users$: User;
+  users$
   username: string;
   password: string;
   comment: any;
@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit {
     private data: DataCommentService,
     private buzz: BuzzesService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {

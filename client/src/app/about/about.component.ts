@@ -80,13 +80,14 @@ export class AboutComponent implements OnInit {
     )
   }
 
-  openDialog(title: string, original: string) {
+  openDialog(title: string, original: string, id: string | number) {
     const config = new MatDialogConfig();
 
     config.minHeight = "50vh";
     config.data = {
       title: title,
-      original: original
+      original: original,
+      id: id
     };
 
     // this.dialog.open(CommentDialogComponent, config)

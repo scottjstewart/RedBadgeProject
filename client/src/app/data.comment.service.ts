@@ -13,9 +13,9 @@ export class DataCommentService {
   constructor(private http: HttpClient, private auth: AuthUserService) {}
 
   addComment(comment: string, id: string | number): Observable<any> {
-    return this.http
-      .post(`/comment/add/${id}`, { text: comment })
-      .pipe(tap(ret => console.log(ret)));
+    return this.http.post(`/comment/add/${id}`, { text: comment }).pipe(
+      tap(ret => console.log(ret))
+    )
   }
 
   getComments() {

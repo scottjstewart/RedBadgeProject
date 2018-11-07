@@ -6,12 +6,6 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from './user.model';
 import { UserGuard } from './user.guard';
 
-const url: string = 'http://localhost:3000'
-const httpAuthOptions = {
-  headers: new HttpHeaders({
-
-  })
-}
 
 @Injectable({
   providedIn: 'root'
@@ -32,19 +26,18 @@ export class AuthUserService {
   getUser(): Observable<User> {
     console.log('get user start')
     return this.http.get<User>('/user/get')
-    .pipe(tap(auth => console.log(auth)))
+      .pipe(tap(auth => console.log(auth)))
   }
 
-  updateUser(user: User): Observable<any> {
-    // let token = localStorage.getItem('sessionToken')
-    // let newUser: User = {
-    //   firstName: user.firstName,
-    //   lastName: user.lastName,
-    //   email: user.email,
-    //   userName: user.userName,
-    // }
+  updateUser(fn: string, ln: string, username: string, email: string, password: string): Observable<any> {
+    let user: User = {
+      firstName: fn,
+      lastName: ln,
+      email: email,
+      userName: username,
+      password: password
+    }
     return this.http.put(`/user/update`, user).pipe(
-      tap(),
       catchError(this.handleError('updateUser', []))
     )
   }
