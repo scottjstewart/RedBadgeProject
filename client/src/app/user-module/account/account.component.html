@@ -1,21 +1,69 @@
 <mat-card class="wrapper">
-    <table class='tble'>
-      <tr>
-        <th>User Name</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-      </tr>
-      <tr>
-          <td>{{ users$.userName }}</td>
-          <td>{{ users$.firstName }}</td>
-          <td>{{ users$.lastName }}</td>
-          <td>{{ users$.email }}</td>
-      </tr>
-    </table>
-      <div>
-        <button class='btns'>Update your account</button>
-        <a routerLink="" [class.activated]="currentUrl == '/'"><button (click)="delete()" class='btns'>Delete your account</button>
-        </a>
-      </div>
+  <table class='tble'>
+    <tr>
+      <th>User Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+    </tr>
+    <tr>
+      <td>{{ users$.userName }}</td>
+      <td>{{ users$.firstName }}</td>
+      <td>{{ users$.lastName }}</td>
+      <td>{{ users$.email }}</td>
+    </tr>
+  </table>
+  <div>
+    <button class="button">Update your account</button>
+    <button class="button">Delete your account</button>
+  </div>
+  <h1>Your Activity!</h1>
+  <h3>Buzzes</h3>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let buzz of comments" [id]="buzz.id">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{buzz.title}}</mat-panel-title>
+        <mat-panel-description>
+          Price: {{buzz.price}}
+        </mat-panel-description>
+        <mat-panel-description>Rating: {{buzz.funFactor}}/5</mat-panel-description>
+        <mat-panel-description>category: {{buzz.category}}</mat-panel-description>
+        <mat-panel-description>Location: {{buzz.location}}</mat-panel-description>
+        <mat-panel-description>Votes: {{buzz.upvotes}}/{{buzz.downvotes}}</mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{buzz.description}}</p>
+      <mat-list>
+        <mat-list-item *ngFor="let comment of buzz.comments">
+          <h5>{{comment.commenter}}</h5>
+          <p>{{comment.comment}} </p>
+        </mat-list-item>
+      </mat-list>
+      <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.id)">Comment</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <h3>Your Comments</h3>
+  <div>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let comment of comments" [id]="comment.id">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{comment.title}}</mat-panel-title>
+          <mat-panel-description>
+            Price: {{comment.price}}
+          </mat-panel-description>
+          <mat-panel-description>Rating: {{comment.funFactor}}/5</mat-panel-description>
+          <mat-panel-description>category: {{comment.category}}</mat-panel-description>
+          <mat-panel-description>Location: {{comment.location}}</mat-panel-description>
+          <mat-panel-description>Votes: {{comment.upvotes}}/{{comment.downvotes}}</mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>{{comment.description}}</p>
+        <mat-list>
+          <mat-list-item *ngFor="let comment of comment.comments">
+            <h5>{{comment.commenter}}</h5>
+            <p>{{comment.comment}} </p>
+          </mat-list-item>
+        </mat-list>
+        <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(comment.id)">Comment</button>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </mat-card>
