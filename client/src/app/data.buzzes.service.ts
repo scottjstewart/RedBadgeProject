@@ -16,7 +16,7 @@ export class BuzzesService {
 
   getBuzzes() {
     return this.http
-      .get("http://localhost:3000/buzz/get")
+      .get("/buzz/get")
       .pipe(tap(data => console.log(data)));
   }
 

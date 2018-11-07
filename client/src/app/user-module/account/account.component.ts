@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthUserService } from '../../data.auth-user.service';
+import { User } from '../../user.model';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  users$: User
+
+  constructor(
+    private auth: AuthUserService
+  ) { }
 
   ngOnInit() {
+    this.auth.getUser().subscribe(auth => {
+      this.users$ = auth
+      console.log("here is the data", this.users$)
+    })
   }
 
 }

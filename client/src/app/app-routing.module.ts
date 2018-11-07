@@ -7,6 +7,7 @@ import { ContactComponent } from "./contact/contact.component";
 import { AboutComponent } from "./about/about.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
+import { MyAccountComponent } from './my-account/my-account.component'
 
 const routes: Routes = [
   {
@@ -30,9 +31,13 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: "user/account",
+    component: MyAccountComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
-  }
+  },
 ];
 
 @NgModule({

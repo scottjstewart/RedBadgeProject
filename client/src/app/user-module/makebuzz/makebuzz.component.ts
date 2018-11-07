@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AuthUserService } from 'src/app/data.auth-user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { BuzzesService } from '../../data.buzzes.service'; 
+import { Buzz } from '../../buzz.model'
 
 @Component({
   selector: 'app-makebuzz',
@@ -11,10 +13,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class MakebuzzComponent implements OnInit {
   user
   form: FormGroup
+
   constructor(
+    private Buzz: BuzzesService,
     private fb: FormBuilder,
     private auth: AuthUserService,
     private ref: MatDialogRef<MakebuzzComponent>,
+
     @Inject(MAT_DIALOG_DATA) data
   ) {
     if (data) {
@@ -35,7 +40,13 @@ export class MakebuzzComponent implements OnInit {
   }
 
   submit(comment: string) {
+    let buzz: Buzz = this.form.value
     console.log('buzz', this.form.value)
+    this.Buzz.makeBuzz(buzz).subscribe(
+      res => {
+        console.log('it worked')
+      }
+    )
     this.ref.close(this.form.value)
   }
 
