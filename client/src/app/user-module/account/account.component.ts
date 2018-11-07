@@ -3,6 +3,7 @@ import { AuthUserService } from "../../data.auth-user.service";
 import { User } from "../../user.model";
 import { BuzzesService } from "../../data.buzzes.service";
 import { DataCommentService } from "../../data.comment.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-account",
@@ -16,11 +17,13 @@ export class AccountComponent implements OnInit {
   comment: any;
   buzzes: any;
   commentId: any;
+  buzz: any;
 
   constructor(
     private auth: AuthUserService,
     private data: DataCommentService,
-    private buzz: BuzzesService
+    private buzzSvc: BuzzesService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -28,7 +31,12 @@ export class AccountComponent implements OnInit {
       this.users$ = auth;
       console.log("here is the data", this.users$);
     });
-    // this.buzz.getBuzz(buzzId).subscribe(buzz => {
+    // let id = this.route.snapshot.paramMap.get("id");
+    // this.buzzSvc.getBuzzById(id).subscribe(res => {
+    //   this.buzz = res;
+    //   console.log(this.buzz);
+    // });
+    // this.buzz.getBuzz(buzzerId).subscribe(buzz => {
     //   this.buzzes = buzz;
     // });
     // this.data.getOwnComment(this.users$.comment).subscribe(data => {
