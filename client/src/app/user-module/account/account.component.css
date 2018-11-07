@@ -8,3 +8,10 @@
     width: 100vw;
     border-radius: 0;
 }
+
+.tble{
+    background-image: linear-gradient(blue, purple);
+    width: 100%;
+    text-align: center;
+    color: white;
+}

@@ -1,5 +1,5 @@
 <mat-card class="wrapper">
-    <table>
+    <table class='tble'>
       <tr>
         <th>User Name</th>
         <th>First Name</th>
@@ -12,6 +12,9 @@
           <td>{{ users$.lastName }}</td>
           <td>{{ users$.email }}</td>
       </tr>
-
     </table>
+      <div>
+        <button>Update your account</button>
+        <button>Delete your account</button>
+      </div>
 </mat-card>
