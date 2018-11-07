@@ -4,59 +4,48 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from './user.model';
-import { UserGuard } from './user.guard';
+import { UserGuard } from "./user.guard";
 
-const url: string = 'http://localhost:3000'
-const httpAuthOptions = {
-  headers: new HttpHeaders({
-
-  })
-}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthUserService {
+  constructor(private http: HttpClient, private jwt: JwtHelperService) {}
 
-  constructor(
-    private http: HttpClient,
-    private jwt: JwtHelperService
-  ) { }
-
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error)
-      return of(result as T)
-    }
+      console.error(error);
+      return of(result as T);
+    };
   }
   getUser(): Observable<User> {
-    console.log('get user start')
-    return this.http.get<User>('/user/get')
-    .pipe(tap(auth => console.log(auth)))
+    console.log("get user start");
+    return this.http
+      .get<User>("/user/get")
+      .pipe(tap(auth => console.log(auth)));
   }
 
   updateUser(user: User): Observable<any> {
-    return this.http.put(`/user/update`, user).pipe(
-      tap(),
-      catchError(this.handleError<any>('updateUser'))
+    return this.http.put('/user/update', user).pipe(
+      catchError(this.handleError('updateUser', []))
     )
   }
 
+
   deleteUser(username: string, password: string): Observable<any> {
-    return this.http.delete<any>(`/user/delete`)
-      .pipe(
-        tap(),
-        catchError(this.handleError('deletUser', []))
-      )
+    return this.http.delete<any>(`/user/delete`).pipe(
+      tap(),
+      catchError(this.handleError("deletUser", []))
+    );
   }
 
   loggedIn(): boolean {
-    let token = localStorage.getItem('sessionToken')
-    if (token && token !== null && token !== '') {
-      return !this.jwt.isTokenExpired()
+    let token = localStorage.getItem("sessionToken");
+    if (token && token !== null && token !== "") {
+      return !this.jwt.isTokenExpired();
     } else {
-      return false
+      return false;
     }
   }
-
 }

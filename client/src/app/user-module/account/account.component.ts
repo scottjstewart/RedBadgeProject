@@ -3,9 +3,8 @@ import { AuthUserService } from "../../data.auth-user.service";
 import { User } from "../../user.model";
 import { BuzzesService } from "../../data.buzzes.service";
 import { DataCommentService } from "../../data.comment.service";
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog } from "@angular/material";
 import { UpdateUserComponent } from "./update-user/update-user.component";
-
 
 @Component({
   selector: "app-account",
@@ -13,24 +12,26 @@ import { UpdateUserComponent } from "./update-user/update-user.component";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-  users$: User;
+  users$;
   username: string;
   password: string;
   comment: any;
   buzzes: any;
   commentId: any;
-  // buzz: any;
+  buzz: any;
+  loggedIn
 
   constructor(
     private auth: AuthUserService,
     private data: DataCommentService,
-    private buzz: BuzzesService,
+    private buzzs: BuzzesService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {
       this.users$ = auth;
+      this.loggedIn = this.auth.loggedIn()
       // console.log("here is the data", this.users$);
     });
     // let id = this.route.snapshot.paramMap.get("id");
@@ -49,8 +50,24 @@ export class AccountComponent implements OnInit {
     this.auth.deleteUser(this.username, this.password).subscribe();
   }
 
+  deleteBuzz(id: any): void {
+    this.buzzs.deleteBuzz(id).subscribe(succ => {
+      this.auth.getUser().subscribe(auth => {
+        this.users$ = auth;
+      });
+    });
+  }
+
+  deleteComment(commentId: any): void {
+    this.data.deleteComment(commentId).subscribe(succ => {
+      this.auth.getUser().subscribe(auth => {
+        this.users$ = auth;
+      });
+    });
+  }
+
   updateUser() {
-    const config = new MatDialogConfig;
+    const config = new MatDialogConfig();
 
     config.minHeight = "50vh";
 
@@ -58,7 +75,9 @@ export class AccountComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateUserComponent, config);
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data)
+      this.auth.updateUser(data).subscribe(
+        res => console.log(res)
+      )
     });
   }
 }

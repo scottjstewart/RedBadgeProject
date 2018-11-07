@@ -1,7 +1,9 @@
 let bcrypt = require("bcryptjs");
 let jwt = require("jsonwebtoken");
 let db = require("../db");
+let buzz = require('../models/buzz')
 let user = require('../models/user')
+let comment = require('../models/comment')
 let validateSession = require("../middleware/validate-session");
 
 module.exports = (app, db) => {
@@ -167,7 +169,32 @@ module.exports = (app, db) => {
 
   app.get("/user/get", validateSession, (req, res) => {
     user
-      .findOne({where:{id: req.user.id}})
+      .findOne({
+        where: { id: req.user.id },
+        include: [
+          {
+            model: buzz,
+            as: 'Buzzes',
+            include: [
+              {
+                model: comment,
+                as: 'Comments',
+                include: [
+                  {
+                    model: user,
+                    as: 'Commenter',
+                    attributes: ['userName']
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            model: comment,
+            as: 'Comment',
+          }
+        ]
+      })
       .then(user => res.status(200).send(user))
       .catch(err => res.status(500).json({ error: err }));
   });

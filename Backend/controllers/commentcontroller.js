@@ -88,7 +88,8 @@ module.exports = (app, db) => {
     )
       .then(
         comm => {
-          comm.setCommenter(req.user.id)
+          comm.setCommenter(req.user)
+
           user.findOne({ where: { id: req.user.id } }).then(
             usr => {
               usr.addComment(comm)
@@ -97,6 +98,7 @@ module.exports = (app, db) => {
           buzz.findById(req.params.buzzId).then(
             buz => {
               buz.addComments(comm)
+              comm.setBuzz(buz)
             }
           )
         }
@@ -117,6 +119,7 @@ module.exports = (app, db) => {
       }
     });
   });
+
   app.delete("/comment/delete/:id", validateSession, (req, res) => {
     comment.findOne({ where: { id: req.params.id } }).then(comment => {
       if (comment.userId === req.user.id) {

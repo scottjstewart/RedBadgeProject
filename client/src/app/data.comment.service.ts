@@ -34,7 +34,7 @@ export class DataCommentService {
     return this.http.put("/comment/update" + commentId, newComment);
   }
 
-  deleteComment(commentId) {
-    return this.http.delete("/comment/delete" + commentId);
+  deleteComment(commentId): Observable<any> {
+    return this.http.delete("/comment/delete/" + commentId);
   }
 }

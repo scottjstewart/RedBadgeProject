@@ -1,9 +1,10 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { Observable } from "rxjs";
-import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
-import { BuzzesService } from "src/app/data.buzzes.service";
-import { DataCommentService } from "../../data.comment.service";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { BuzzesService } from 'src/app/data.buzzes.service';
+import { DataCommentService } from 'src/app/data.comment.service';
+
 
 @Component({
   selector: "app-comment.dialog",
