@@ -50,7 +50,7 @@ export class AuthUserService {
   }
 
   deleteUser(username: string, password: string): Observable<any> {
-    return this.http.delete<any>(`${url}/user/delete`)
+    return this.http.delete<any>(`/user/delete`)
       .pipe(
         tap(),
         catchError(this.handleError('deletUser', []))

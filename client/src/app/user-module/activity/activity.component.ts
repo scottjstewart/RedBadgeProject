@@ -19,6 +19,7 @@ export class ActivityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loggedIn = this.auth.loggedIn()
     this.auth.getUser().subscribe(auth => {
       this.users$ = auth;
       console.log(this.users$.firstName);

@@ -10,10 +10,14 @@ import { DataCommentService } from "../../data.comment.service";
   styleUrls: ["./account.component.css"]
 })
 export class AccountComponent implements OnInit {
-  users$: User;
+
+  users$: User
+  username: string
+  password: string
   comment: any;
   buzzes: any;
   commentId: any;
+
 
   constructor(
     private auth: AuthUserService,
@@ -33,4 +37,8 @@ export class AccountComponent implements OnInit {
     //   this.comment = data;
     // });
   }
+  delete(): void {
+    this.auth.deleteUser(this.username, this.password).subscribe();
+  }
+
 }
