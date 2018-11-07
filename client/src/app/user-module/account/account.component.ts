@@ -3,9 +3,8 @@ import { AuthUserService } from "../../data.auth-user.service";
 import { User } from "../../user.model";
 import { BuzzesService } from "../../data.buzzes.service";
 import { DataCommentService } from "../../data.comment.service";
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog } from "@angular/material";
 import { UpdateUserComponent } from "./update-user/update-user.component";
-
 
 @Component({
   selector: "app-account",
@@ -24,7 +23,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private auth: AuthUserService,
     private data: DataCommentService,
-    private buzz: BuzzesService,
+    // private buzz: BuzzesService,
     private dialog: MatDialog
   ) {}
 
@@ -50,7 +49,7 @@ export class AccountComponent implements OnInit {
   }
 
   updateUser() {
-    const config = new MatDialogConfig;
+    const config = new MatDialogConfig();
 
     config.minHeight = "50vh";
 
@@ -58,7 +57,7 @@ export class AccountComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateUserComponent, config);
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data)
+      console.log(data);
     });
   }
 }
