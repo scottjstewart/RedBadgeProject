@@ -3,7 +3,8 @@ const routes = [
   require('./buzzcontroller'),
   require('./usercontroller'),
   require('./commentcontroller'),
-  require('../controllers/ctrlAdmin')
+  require('../controllers/ctrlAdmin'),
+  require('../controllers/ctrlUpvote')
 ];
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig, MatSnackBar } from "@angular/material";
 import { CommentDialogComponent } from "./comment.dialog/comment.dialog.component";
 import { AuthUserService } from "../data.auth-user.service";
 import { BuzzesService } from "../data.buzzes.service";
@@ -8,6 +8,7 @@ import { LocationService } from "../data.location.service";
 import { Buzz } from "../buzz.model";
 import { tap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { UpvoteService } from "../user-module/data.upvote.service";
 
 
 @Component({
@@ -60,7 +61,9 @@ export class AboutComponent implements OnInit {
     private dialog: MatDialog,
     private auth: AuthUserService,
     private geo: LocationService,
-    private data: BuzzesService
+    private data: BuzzesService,
+    private upvote: UpvoteService,
+    private snackbar: MatSnackBar
   ) {
     data.buzzr$.subscribe(
       res => {
@@ -98,4 +101,23 @@ export class AboutComponent implements OnInit {
       }
     });
   }
+
+  plusOne(id: string) {
+    this.upvote.plusOne(id).subscribe(
+      res => {
+        console.log(res)
+        if (res.status === 200) {
+          this.snackbar.open(res.message, "Ok", { duration: 3000 })
+          this.data.getBuzzes().subscribe(
+            data => {
+              this.buzzes$ = data
+            }
+          )
+        } else if (res.status === 201) {
+          this.snackbar.open(res.message, "Ok", { duration: 3000 })
+        }
+      }
+    )
+  }
+
 }
