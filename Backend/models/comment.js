@@ -10,6 +10,11 @@ const Comment = db.define('comment', {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         allowNull: false
+    },
+    edited: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
     }
 });
 

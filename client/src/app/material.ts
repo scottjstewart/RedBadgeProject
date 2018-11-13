@@ -34,7 +34,10 @@ import {
   MatButtonModule,
   MatCheckboxModule
 } from "@angular/material";
-import { MatFormFieldModule, MatFormField } from "@angular/material/form-field";
+import {
+  MatFormFieldModule,
+  MatFormField
+} from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 
 import { NgModule } from "@angular/core";
@@ -124,4 +127,4 @@ import { NgModule } from "@angular/core";
     MatIconModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }

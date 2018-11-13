@@ -109,8 +109,11 @@ module.exports = (app, db) => {
         userName: req.body.userName
       })
       .then(newUser => {
+
+        let role = user.pet === 'squirrel' ? 3 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 1 : 3
+
         let token = jwt.sign(
-          { id: newUser.id },
+          { id: newUser.id, status: role },
           process.env.JWT_SECRET,
           { expiresIn: 60 * 60 * 24 }
         );
@@ -133,38 +136,43 @@ module.exports = (app, db) => {
   })
 
   app.post("/user/login", (req, res) => {
-    user.findOne({ where: { userName: req.body.userName } }).then(
-      user => {
-        if (user) {
-          bcrypt.compare(req.body.password, user.password, (err, matches) => {
-            if (matches) {
-              let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-                expiresIn: 60 * 60 * 24
-              });
-              let resUser = {
-                userName: user.userName,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
-                id: user.id
-              };
-              res.json({
-                user: resUser,
-                auth: true,
-                message: "Success!",
-                sessionToken: token
-              });
-            } else {
-              res.status(502).send({ error: "bad gateway" });
-            }
-          });
-        } else {
-          res.status(500).send({ error: "failed to authenticate" });
-        }
-      },
-      err => res.status(501).send({ error: "failed to process" })
-    );
+    user.findOne(
+      {
+        where: { userName: req.body.userName }
+      }).then(
+        user => {
+          if (user) {
+            bcrypt.compare(req.body.password, user.password, (err, matches) => {
+              if (matches) {
+                let role = user.pet === 'squirrel' ? 3 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 1 : 3
+
+                let token = jwt.sign({ id: user.id, status: role }, process.env.JWT_SECRET, {
+                  expiresIn: 60 * 60 * 24
+                });
+                let resUser = {
+                  userName: user.userName,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  email: user.email,
+                  status: user.pet === 'squirrel' ? 1 : user.pet === 'cat' ? 2 : user.pet === 'dog' ? 3 : 1,
+                  id: user.id
+                };
+                res.json({
+                  user: resUser,
+                  auth: true,
+                  message: "Success!",
+                  sessionToken: token
+                });
+              } else {
+                res.status(502).send({ error: "bad gateway" });
+              }
+            });
+          } else {
+            res.status(500).send({ error: "failed to authenticate" });
+          }
+        },
+        err => res.status(501).send({ error: "failed to process" })
+      );
   });
 
   app.get("/user/get", validateSession, (req, res) => {

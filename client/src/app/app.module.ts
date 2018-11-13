@@ -1,35 +1,48 @@
+//angular imports
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { UserModule } from "./user-module/user.module";
-import { ClientModule } from "./client-module/client.module";
-import { AdminModule } from "./admin-module/admin.module";
-import { SidebarComponent } from "./sidebar/sidebar.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CdkTableModule } from "@angular/cdk/table";
 import { CdkTreeModule } from "@angular/cdk/tree";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { LoginComponent } from "./login/login.component";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { MaterialModule } from "./material";
-import { SignupComponent } from "./signup/signup.component";
-import { FooterComponent } from "./footer/footer.component";
-import { HomeComponent } from "./home/home.component";
-import { ContactComponent } from './contact/contact.component';
-import { AboutComponent } from './about/about.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NotFoundComponent } from './not-found/not-found.component'
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS
+} from "@angular/common/http";
+import { MaterialModule } from "./material";//array: angular material imports
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
-import { BuzzDetailComponent } from './buzz-detail/buzz-detail.component';
-import { CommentDialogComponent } from "./about/comment.dialog/comment.dialog.component";
 import { MatDialogModule } from "@angular/material";
-import { UrlInterceptor } from "./intercept.url";
+
+//component imports
+import { SidebarComponent } from './public/sidebar/sidebar.component'
+import { AppComponent } from "./app.component";
+import { LoginComponent } from './public/login/login.component'
+import { SignupComponent } from './public/signup/signup.component';
+import { FooterComponent } from './public/footer/footer.component';
+import { HomeComponent } from './public/home/home.component'
+import { ContactComponent } from './public/contact/contact.component'
+import { AboutComponent } from './public/about/about.component'
+import { NotFoundComponent } from './public/not-found/not-found.component'
+import { BuzzDetailComponent } from './public/buzz-detail/buzz-detail.component';
+import { CommentDialogComponent } from './user-module/comment.dialog/comment.dialog.component'
 import { MakebuzzComponent } from "./user-module/makebuzz/makebuzz.component";
-import { MyAccountComponent } from './my-account/my-account.component';
 import { UpdateUserComponent } from "./user-module/account/update-user/update-user.component";
 
+//module imports
+import { UserModule } from "./user-module/user.module";
+import { ClientModule } from "./client-module/client.module";
+import { AdminModule } from "./admin-module/admin.module";
+import { AppRoutingModule } from "./app-routing.module";
+
+//interceptors
+import { UrlInterceptor } from "./shared/interceptors/intercept.url";
+
+//token retrieval function for auth0
 export function tokenGetter() {
   return localStorage.getItem('sessionToken')
 }
@@ -47,8 +60,8 @@ export function tokenGetter() {
     NotFoundComponent,
     BuzzDetailComponent,
     CommentDialogComponent,
-    MyAccountComponent,
   ],
+
   imports: [
     BrowserModule,
     UserModule,
@@ -79,6 +92,7 @@ export function tokenGetter() {
       }
     }),
   ],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -86,14 +100,18 @@ export function tokenGetter() {
       multi: true
     }
   ],
+
   bootstrap: [
     AppComponent
   ],
+
   entryComponents: [
     CommentDialogComponent,
     MakebuzzComponent,
     UpdateUserComponent
   ]
+
 })
+
 export class AppModule { }
 
