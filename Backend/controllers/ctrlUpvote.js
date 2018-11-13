@@ -25,11 +25,31 @@ module.exports = (app, db) => {
                                 buz => {
                                     upvte.setVote(buz)
                                     upvote.findAndCountAll({ where: { buzzId: buz.id } })
-                                        .then(count => buz.update({ upVote: count.count }))
+                                        .then(count => {
+                                            buz.update({
+                                                upVote: count.count
+                                            })
+                                            res.status(200).json({ status: 200, message: '+1', votes: count.count })
+                                        }
+                                        )
                                 })
-                        res.status(200).json({ status: 200, message: '+1' })
                     } else if (!created) {
-                        res.status(201).json({ status: 201, message: 'You have already voted for this buzz' })
+                        upvote.destroy({
+                            where: { id: upvte.id }
+                        }).then(
+                            buzz.findOne({ where: { id: req.params.buzzId } })
+                                .then(
+                                    buz => {
+                                        upvote.findAndCountAll({ where: { buzzId: buz.id } })
+                                            .then(count => {
+                                                buz.update({
+                                                    upVote: count.count
+                                                })
+                                                res.status(200).json({ status: 200, message: '-1', votes: count.count })
+                                            }
+                                            )
+                                    })
+                        )
                     }
                 })
             })

@@ -7,15 +7,12 @@ module.exports = function (req, res, next) {
         next()
     } else {
         let token = req.headers.authorization;
-        console.log(token)
         if (!token) return res.status(403).send({ auth: false, message: 'No token provided.' })
         else {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                 if (decoded) {
-                    console.log('decoded', decoded.id)
                     User.findOne({ where: { id: decoded.id } }).then(user => {
                         req.user = user;
-                        console.log('validate session triggered', req.user, user)
                         next();
                     },
                         function () {

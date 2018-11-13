@@ -21,24 +21,16 @@
 
   <h1>Your Activity!</h1>
   <mat-card>
-    <mat-accordion>
+    <mat-accordion *ngIf="users$ ">
       <h3>Buzzes</h3>
       <mat-expansion-panel *ngFor="let buzz of users$.Buzzes" [id]="buzz.id">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ buzz.title }}</mat-panel-title>
           <mat-panel-description>Price: {{ buzz.price }}</mat-panel-description>
-          <mat-panel-description
-            >Rating: {{ buzz.funFactor }}/5</mat-panel-description
-          >
-          <mat-panel-description
-            >category: {{ buzz.category }}</mat-panel-description
-          >
-          <mat-panel-description
-            >Location: {{ buzz.location }}</mat-panel-description
-          >
-          <mat-panel-description
-            >Votes: {{ buzz.upvotes }}</mat-panel-description
-          >
+          <mat-panel-description>Rating: {{ buzz.funFactor }}/5</mat-panel-description>
+          <mat-panel-description>category: {{ buzz.category }}</mat-panel-description>
+          <mat-panel-description>Location: {{ buzz.location }}</mat-panel-description>
+          <mat-panel-description>Votes: {{ buzz.upVote }}</mat-panel-description>
         </mat-expansion-panel-header>
         <h4>Details:</h4>
         <p>{{ buzz.details }}</p>
@@ -50,17 +42,11 @@
             </h5>
             <p matLine>{{ comment.text }}</p>
             <p matLine>
-              <small
-                ><b>{{ comment.createdAt | date: "short" }}</b></small
-              >
+              <small><b>{{ comment.createdAt | date: "short" }}</b></small>
             </p>
           </mat-list-item>
         </mat-list>
-        <button
-          mat-raised-button
-          [disabled]="!loggedIn"
-          (click)="openDialog(buzz.id)"
-        >
+        <button mat-raised-button [disabled]="!loggedIn" (click)="openDialog(buzz.id)">
           Comment
         </button>
         <button class="button" (click)="deleteBuzz(buzz.id)">
@@ -78,16 +64,12 @@
         </h4>
         <p matLine>{{ comment.text }}</p>
         <p matLine>
-          <small
-            ><b>{{ comment.createdAt | date: "short" }}</b></small
-          >
+          <small><b>{{ comment.createdAt | date: "short" }}</b></small>
         </p>
         <button class="button" (click)="deleteComment(comment.id)">
           Delete this Comment
         </button>
-        <a mat-button routerLink="/buzz/detail/{{comment.BuzzId}}"
-          >Go To Buzz</a
-        >
+        <a mat-button routerLink="/buzz/detail/{{comment.BuzzId}}">Go To Buzz</a>
       </mat-list-item>
     </mat-list>
   </mat-card>

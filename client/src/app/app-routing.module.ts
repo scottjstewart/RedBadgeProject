@@ -1,14 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { SignupComponent } from "../app/signup/signup.component";
-import { LoginComponent } from "../app/login/login.component";
-import { HomeComponent } from "./home/home.component";
-import { ContactComponent } from "./contact/contact.component";
-import { AboutComponent } from "./about/about.component";
-import { NotFoundComponent } from "./not-found/not-found.component";
-import { SidebarComponent } from "./sidebar/sidebar.component";
-import { MyAccountComponent } from './my-account/my-account.component'
-import { BuzzDetailComponent } from "./buzz-detail/buzz-detail.component";
+import { SignupComponent } from './public/signup/signup.component'
+import { LoginComponent } from './public/login/login.component'
+import { HomeComponent } from './public/home/home.component';
+import { ContactComponent } from './public/contact/contact.component'
+import { AboutComponent } from './public/about/about.component'
+import { NotFoundComponent } from './public/not-found/not-found.component'
+import { BuzzDetailComponent } from './public/buzz-detail/buzz-detail.component';
 
 const routes: Routes = [
   {
@@ -34,10 +32,6 @@ const routes: Routes = [
   {
     path: "",
     component: HomeComponent
-  },
-  {
-    path: "user/account",
-    component: MyAccountComponent
   },
   {
     path: '**',

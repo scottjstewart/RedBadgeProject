@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthUserService } from "../../data.auth-user.service";
-import { User } from "../../user.model";
-import { BuzzesService } from "../../data.buzzes.service";
-import { DataCommentService } from "../../data.comment.service";
+import { AuthUserService } from "../../shared/services/data.auth-user.service";
+import { BuzzesService } from "../../shared/services/data.buzzes.service";
+import { DataCommentService } from "../../shared/services/data.comment.service";
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { UpdateUserComponent } from "./update-user/update-user.component";
 
@@ -16,7 +15,7 @@ export class AccountComponent implements OnInit {
   username: string;
   password: string;
   comment: any;
-  buzzes: any;
+  buzzes: any[];
   commentId: any;
   buzz: any;
   loggedIn
@@ -26,26 +25,21 @@ export class AccountComponent implements OnInit {
     private data: DataCommentService,
     private buzzs: BuzzesService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.buzzs.buzzr$.subscribe(
+      res => {
+        this.users$.Buzzes.push(res)
+      }
+    )
+  }
 
   ngOnInit() {
     this.auth.getUser().subscribe(auth => {
       this.users$ = auth;
       this.loggedIn = this.auth.loggedIn()
-      // console.log("here is the data", this.users$);
     });
-    // let id = this.route.snapshot.paramMap.get("id");
-    // this.buzzSvc.getBuzzById(id).subscribe(res => {
-    //   this.buzz = res;
-    //   console.log(this.buzz);
-    // });
-    // this.buzz.getBuzz(buzzerId).subscribe(buzz => {
-    //   this.buzzes = buzz;
-    // });
-    // this.data.getOwnComment(this.users$.comment).subscribe(data => {
-    //   this.comment = data;
-    // });
   }
+
   delete(): void {
     this.auth.deleteUser(this.username, this.password).subscribe();
   }
@@ -71,7 +65,6 @@ export class AccountComponent implements OnInit {
 
     config.minHeight = "50vh";
 
-    // this.dialog.open(CommentDialogComponent, config)
     const dialogRef = this.dialog.open(UpdateUserComponent, config);
 
     dialogRef.afterClosed().subscribe(data => {

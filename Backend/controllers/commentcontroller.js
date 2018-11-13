@@ -87,51 +87,105 @@ module.exports = (app, db) => {
       { text: req.body.text }
     )
       .then(
-        comm => {
-          comm.setCommenter(req.user)
+        async comm => {
+          await comm.setCommenter(req.user)
 
-          user.findOne({ where: { id: req.user.id } }).then(
+          await user.findOne({ where: { id: req.user.id } }).then(
             usr => {
               usr.addComment(comm)
             }
           )
-          buzz.findById(req.params.buzzId).then(
+          await buzz.findById(req.params.buzzId).then(
             buz => {
               buz.addComments(comm)
               comm.setBuzz(buz)
             }
           )
-        }
-      )
+          comment.findOne({
+            where: { id: comm.id },
+            include: [
+              {
+                model: user,
+                as: "Commenter",
+                attributes: ["userName"]
+              }
+            ]
+          }).then(
+            nComm => {
+              res.status(200).send(nComm)
+            }
+          )
+        })
   });
 
   app.put("/comment/update/:id", validateSession, (req, res) => {
-    comment.findOne({ where: { id: req.params.id } }).then(comment => {
-      if (comment.userId === req.user.id) {
-        comment
-          .update(req.body, { where: { id: req.params.id } })
-          .then(buzz => res.status(200).json(comment))
-          .catch(err => res.json(req.error));
-      } else {
-        res.status(500).json({
-          message: `User does not own ${req.params.id}`
+    comment
+      .findOne(
+        {
+          where: { id: req.params.id }
+        }
+      )
+      .then(
+        comms => {
+          if (comms.userId === req.user.id) {
+            comms
+              .update(
+                {
+                  text: req.body.text,
+                  edited: true
+                }
+              )
+              .then(
+                buzz => {
+                  comment.findOne({
+                    where: { id: req.params.id },
+                    include: [
+                      {
+                        model: user,
+                        as: 'Commenter',
+                        attributes: ['userName']
+                      }
+                    ]
+                  }).then(
+                    comm => res.status(200).json(comm)
+                  )
+                }
+              )
+              .catch(
+                err => res.json(req.error)
+              );
+          } else {
+            res.status(500).json({
+              message: `User does not own ${req.params.id}`
+            });
+          }
         });
-      }
-    });
   });
 
   app.delete("/comment/delete/:id", validateSession, (req, res) => {
-    comment.findOne({ where: { id: req.params.id } }).then(comment => {
-      if (comment.userId === req.user.id) {
-        comment
-          .destroy({ where: { id: req.params.id } })
-          .then(comment => res.status(200).json(comment))
-          .catch(err => res.json(req.error));
-      } else {
-        res.status(500).json({
-          message: `C'mon man! don't delete other peoples stuff!`
+    comment
+      .findOne(
+        {
+          where: { id: req.params.id }
+        }
+      )
+      .then(
+        comment => {
+          if (comment.userId === req.user.id) {
+            comment
+              .destroy({ where: { id: req.params.id } })
+              .then(comment => res.status(200).json({
+                status: 200,
+                message: 'Comment deleted'
+              }))
+              .catch(err => res.json(req.error));
+          } else {
+            res.status(500).json(
+              {
+                message: `Comment Deleted`
+              });
+          }
         });
-      }
-    });
   });
+
 };

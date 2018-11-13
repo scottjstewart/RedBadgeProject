@@ -6,6 +6,14 @@ const Buzz = db.define('buzz', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    category: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     price: {
         type: Sequelize.STRING,
         allowNull: false
