@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
-import { Buzz } from '../shared/models/buzz.model';
-import { AdminService } from './data.admin.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { AdminService } from '../services/data.admin.service';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { catchError, finalize } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material';
+import { User } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BuzzDataSourceService extends DataSource<Buzz> {
-  private buzzes = new BehaviorSubject<Buzz[]>([])
+export class UserDataSource extends DataSource<User>{
+
+  private users = new BehaviorSubject<User[]>([])
   private loading = new BehaviorSubject<boolean>(false)
 
   public loading$ = this.loading.asObservable()
@@ -19,35 +20,31 @@ export class BuzzDataSourceService extends DataSource<Buzz> {
   constructor(
     private admin: AdminService,
     private paginator: MatPaginator
-  ) {
-    super()
-  }
+  ) { super() }
 
-  connect(collection: CollectionViewer) {
-    return this.buzzes.asObservable()
+  connect(collection: CollectionViewer): Observable<User[]> {
+    return this.users.asObservable()
   }
 
   disconnect(collection: CollectionViewer) {
-    this.buzzes.complete()
+    this.users.complete()
     this.loading.complete()
   }
 
-  loadBuzzes(
+  loadUsers(
     sortDirection = 'asc',
     pageIndex = 0,
     pageSize = 5
   ) {
     this.loading.next(true)
 
-    this.admin.adminGetBuzzes(
-      pageIndex,
-      pageSize,
-      sortDirection,
-    ).pipe(
+    this.admin.adminGetUsers(pageIndex, pageSize, sortDirection).pipe(
       catchError(() => of([])),
       finalize(() => this.loading.next(false))
     ).subscribe(
-      buzzs => this.buzzes.next(buzzs)
+      users => {
+        this.users.next(users)
+      }
     )
   }
 

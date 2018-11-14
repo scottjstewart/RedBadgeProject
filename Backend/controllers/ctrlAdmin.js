@@ -2,9 +2,10 @@ let comment = require("../models/comment");
 let buzz = require("../models/buzz")
 let user = require("../models/user")
 let validateSession = require("../middleware/validate-session");
+let validateAdmin = require('../middleware/validate-admin')
 
 module.exports = (app, db) => {
-    app.get('/admin/users/', validateSession, (req, res) => {
+    app.get('/admin/users/', validateAdmin, (req, res) => {
         user.findAndCountAll({
             attributes: [
                 'id',
@@ -64,13 +65,13 @@ module.exports = (app, db) => {
             )
     })
 
-    app.get('/admin/user/count', validateSession, (req, res) => {
+    app.get('/admin/user/count', validateAdmin, (req, res) => {
         user.count().then(count => {
             res.status(200).json({ count: count })
         })
     })
 
-    app.get('/admin/buzzes', validateSession, (req, res) => {
+    app.get('/admin/buzzes', validateAdmin, (req, res) => {
         buzz.findAll({
             limit: req.query.pageSize,
             offset: req.query.pageNumber * req.query.pageSize,
@@ -99,9 +100,24 @@ module.exports = (app, db) => {
         )
     })
 
-    app.get('/admin/buzz/count', validateSession, (req, res) => {
+    app.get('/admin/buzz/count', validateAdmin, (req, res) => {
         buzz.count().then(count => {
             res.status(200).json({ count: count })
         })
+    })
+
+    app.delete('/admin/user/delete/:id', validateAdmin, (req, res) => {
+        user.destroy({ where: { id: req.params.id } })
+            .then(rez => res.status(200).send({ message: `User ${req.params.id} successfully destroyed.`, success: true }))
+            .catch(err => {
+                res.status(500).send({ message: err.message, error: err, success: false })
+                console.log(err)
+            })
+    })
+
+    app.delete('/admin/buzz/delete/:id', validateAdmin, (req, res) => {
+        buzz.destroy({ where: { id: req.params.id } })
+            .then(rez => res.status(200).send({ message: `Buzz ${req.params.id} successfully deleted`, success: true }))
+            .catch(err => res.status(500).send({ message: err.message, error: err, success: false }))
     })
 }

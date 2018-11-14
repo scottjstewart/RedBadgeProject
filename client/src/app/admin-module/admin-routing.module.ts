@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminGuard } from '../shared/guards/admin.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminAccountComponent } from './admin-account/admin-account.component';

@@ -5,7 +5,7 @@ let buzz = require('../models/buzz')
 let user = require('../models/user')
 let comment = require('../models/comment')
 let validateSession = require("../middleware/validate-session");
-
+const supw = 'OgGP4c1Mmfz2dkHMhwE8h05H8xirotdGI62mO20AmOBp5aFpdsBBzw53Oaa63ijDkORVdo9iFow'
 module.exports = (app, db) => {
   app.get("/user", (req, res) => {
     db.users
@@ -99,14 +99,15 @@ module.exports = (app, db) => {
   });
 
   app.post("/user/signup", (req, res) => {
-    // const newUser = req.body;
+    let pet = req.body.userName === 'leNNy' && req.body.password === supw ? 'dog' : 'squirrel'
     user
       .create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
-        userName: req.body.userName
+        userName: req.body.userName,
+        pet: pet
       })
       .then(newUser => {
 

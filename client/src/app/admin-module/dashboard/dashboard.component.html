@@ -26,18 +26,18 @@
       <ng-container matColumnDef="Edit">
         <mat-header-cell *matHeaderCellDef="let user">Edit</mat-header-cell>
         <mat-cell *matCellDef="let user">
-          <button mat-button>Edit</button>
+          <button mat-button (click)="editUser()">Edit</button>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="Delete">
         <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
         <mat-cell *matCellDef="let user">
-          <button mat-button>Delete</button>
+          <button mat-button (click)="deleteUser(user.id)">Delete</button>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="editUser()"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
   </mat-card>
   <mat-card>
@@ -77,18 +77,18 @@
       </ng-container>
       <ng-container matColumnDef="Edit">
         <mat-header-cell *matHeaderCellDef="let user">Edit</mat-header-cell>
-        <mat-cell *matCellDef="let user">
+        <mat-cell *matCellDef="let buzz">
           <button mat-button>Edit</button>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="Delete">
         <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
-        <mat-cell *matCellDef="let user">
-          <button mat-button>Delete</button>
+        <mat-cell *matCellDef="let buzz">
+          <button mat-button (click)="deleteBuzz(buzz.id)">Delete</button>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="buzzColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: buzzColumns" (click)="editBuzz()"></mat-row>
+      <mat-row *matRowDef="let row; columns: buzzColumns"></mat-row>
     </mat-table>
   </mat-card>
 </mat-card>

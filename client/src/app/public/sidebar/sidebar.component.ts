@@ -4,8 +4,8 @@ import { Router, NavigationEnd, Event } from '@angular/router';
 import { LocationService } from '../../shared/services/data.location.service';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { MakebuzzComponent } from '../../user-module/makebuzz/makebuzz.component';
-import { AdminAuthService } from 'src/app/admin-module/admin-auth.service';
-import { AdminService } from 'src/app/admin-module/data.admin.service';
+import { AdminAuthService } from 'src/app/admin-module/services/admin-auth.service';
+import { AdminService } from 'src/app/admin-module/services/data.admin.service';
 
 @Component({
   selector: 'app-sidebar',
