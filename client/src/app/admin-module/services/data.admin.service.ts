@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AuthUserService } from '../shared/services/data.auth-user.service';
+import { AuthUserService } from '../../shared/services/data.auth-user.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { User } from '../shared/models/user.model';
+import { User } from '../../shared/models/user.model';
 import { map, tap } from 'rxjs/operators';
-import { Buzz } from '../shared/models/buzz.model';
+import { Buzz } from '../../shared/models/buzz.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,8 @@ export class AdminService {
     )
   }
 
-  adminDeleteUser(): Observable<any> {
-    return
+  adminDeleteUser(id: string): Observable<any> {
+    return this.http.delete(`/admin/user/delete/${id}`)
   }
 
   adminUserCount(): Observable<any> {
@@ -61,6 +61,10 @@ export class AdminService {
 
   adminBuzzCount(): Observable<any> {
     return this.http.get<any>('/admin/buzz/count')
+  }
+
+  adminDeleteBuzz(id): Observable<any> {
+    return this.http.delete(`/admin/buzz/delete/${id}`)
   }
 
 }

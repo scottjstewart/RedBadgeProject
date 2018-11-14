@@ -36,9 +36,9 @@ buzz.belongsTo(user, { as: 'Buzzer' })
 buzz.hasMany(upvote, { as: 'Votes' })
 
 //comment associations
-comment.belongsTo(buzz, { as: 'Buzz', onDelete: "cascade" })
-comment.belongsTo(user, { as: 'Commenter', onDelete: 'cascade' })
+comment.belongsTo(buzz, { as: 'Buzz' })
+comment.belongsTo(user, { as: 'Commenter' })
 
 //upvote associaitons
 upvote.belongsTo(user, { as: 'Voter' })
-upvote.belongsTo(buzz, { as: 'Vote', onDelete: 'cascade' })
+upvote.belongsTo(buzz, { as: 'Vote' })

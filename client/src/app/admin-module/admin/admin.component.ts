@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AuthUserService } from '../../shared/services/data.auth-user.service';
 import { User } from '../../shared/models/user.model';
 import { BuzzesService } from '../../shared/services/data.buzzes.service';
-import { AdminService } from '../data.admin.service';
+import { AdminService } from '../services/data.admin.service';
 
 @Component({
     selector: 'app-admin',
@@ -28,8 +28,6 @@ export class AdminComponent implements OnInit {
         })
 
     }
-    deleteUser(): void {
-        this.admin.adminDeleteUser().subscribe();
-    }
+
 
 }

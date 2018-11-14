@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatSnackBar } from '@angular/material';
 import { tap } from 'rxjs/operators';
-import { UserDataSource } from '../user-data-source.service';
-import { AdminService } from '../data.admin.service';
-import { BuzzDataSourceService } from '../buzz-data-source.service';
+import { UserDataSource } from '../data-sources/user-data-source.service';
+import { AdminService } from '../services/data.admin.service';
+import { BuzzDataSourceService } from '../data-sources/buzz-data-source.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +22,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('buzzPaginator') buzzPaginator: MatPaginator
 
   constructor(
-    private admin: AdminService
+    private admin: AdminService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -69,6 +70,37 @@ export class DashboardComponent implements OnInit {
 
   editBuzz() {
 
+  }
+
+  deleteUser(id: string) {
+    this.admin.adminDeleteUser(id).subscribe(
+      res => {
+        if (res.success === true) {
+          this.snackbar.open(res.message, "Ok", { duration: 4500 })
+          this.loadPage()
+        } else if (res.success === false) {
+          this.snackbar.open(res.message, 'Ok', { duration: 4500 })
+        } else {
+          this.snackbar.open('Unknown error has occurred', 'Ok', { duration: 4500 })
+        }
+      }
+    )
+  }
+
+  deleteBuzz(id) {
+    console.log('buzz delete init')
+    this.admin.adminDeleteBuzz(id).subscribe(
+      res => {
+        if (res.success === true) {
+          this.snackbar.open(res.message, "Ok", { duration: 4500 })
+          this.loadBuzz()
+        } else if (res.success === false) {
+          this.snackbar.open(res.message, 'Ok', { duration: 4500 })
+        } else {
+          this.snackbar.open('Unknown error has occurred', 'Ok', { duration: 4500 })
+        }
+      }
+    )
   }
 
 }
